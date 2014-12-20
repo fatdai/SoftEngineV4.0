@@ -42,6 +42,7 @@
 		CEFF10721A456EB7001DBE6F /* MeshCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10701A456EB7001DBE6F /* MeshCache.cpp */; };
 		CEFF10761A457DAB001DBE6F /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10741A457DAB001DBE6F /* ObjLoader.cpp */; };
 		CEFF10791A457DDB001DBE6F /* SDException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10771A457DDB001DBE6F /* SDException.cpp */; };
+		CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -133,6 +134,7 @@
 		CEFF10751A457DAB001DBE6F /* ObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjLoader.h; sourceTree = "<group>"; };
 		CEFF10771A457DDB001DBE6F /* SDException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDException.cpp; sourceTree = "<group>"; };
 		CEFF10781A457DDB001DBE6F /* SDException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDException.h; sourceTree = "<group>"; };
+		CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Draw_Obj_Monkey.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				CEFF105F1A456365001DBE6F /* DrawTriangle_Wire.cpp */,
+				CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */,
 			);
 			name = test;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				CEFF10501A45163B001DBE6F /* Color.cpp in Sources */,
 				CE83BA9E1A44611200C5A0BC /* Mesh.cpp in Sources */,
 				CEFF106F1A456E89001DBE6F /* Sprite.cpp in Sources */,
+				CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */,
 				CE83BABF1A44613500C5A0BC /* Mat4.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -61,7 +61,12 @@ void RenderList::insertMesh(Mesh* mesh){
     
     for (int i = 0; i < mesh->num_faces; ++i) {
         FaceIndex* face_index = &(mesh->faceIndexs[i]);
+        
+        // 指向变换后的顶点
+        Vertex* old_local = face_index->vlist;
+        face_index->vlist = mesh->vlist_trans;
         insertFaceIndex(face_index);
+        face_index->vlist = old_local;
     }
 }
 

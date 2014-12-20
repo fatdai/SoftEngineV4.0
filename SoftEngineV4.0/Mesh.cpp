@@ -152,3 +152,15 @@ bool Mesh::cull(Camera* camera){
     
     return false;
 }
+
+
+void Mesh::setRotateX(float degressX){
+    Mat4::createRotationX(MATH_DEG_TO_RAD(degressX),&rotX);
+}
+void Mesh::setRotateY(float degressY){
+    Mat4::createRotationY(MATH_DEG_TO_RAD(degressY),&rotY);
+}
+void Mesh::setRotateZ(float degressZ){
+    Mat4::createRotationZ(MATH_DEG_TO_RAD(degressZ),&rotZ);
+}
+

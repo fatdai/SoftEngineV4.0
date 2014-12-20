@@ -66,6 +66,10 @@ public:
     // 如果没有被剔除掉,则进行变换,并设置相关标志
     void modelToWorld(Camera* camera);
     
+    void setRotateX(float degressX);
+    void setRotateY(float degressY);
+    void setRotateZ(float degressZ);
+    
 private:
     
     // 进行 cull

@@ -19,9 +19,8 @@
 #include "Vertex.h"
 #include "Color.h"
 #include "Material.h"
+#include "ObjLoader.h"
 
-
-#if 0
 
 // 只渲染一个线框三角形
 
@@ -60,10 +59,15 @@ int main(int argc, const char * argv[])
     float far = 3000.0;
     float fovy = 90.0;
     
+    float angle_y = 0;
+    float angle_x = 0;
+    
     // 球面 UVN 相机
     Camera* camera = new Camera(cam_pos,cam_dir,near,far,fovy,kWINDOW_WIDTH,kWINDOW_HEIGHT,CameraMode::CAM_MODEL_UVN_SPHERICAL);
     
     RenderList renderlist;
+    Mesh monkey;
+    load_Obj_Vertex(&monkey,"monkey.obj",Vec3(80, 80, 80),Vec3(100, 0, 0));
     
     bool quit = false;
     SDL_Event event;
@@ -76,8 +80,23 @@ int main(int argc, const char * argv[])
         
         //逻辑
         {
+            angle_y += 0.8;
+            angle_x += 0.4;
+            if (angle_y > 360.0) {
+                angle_y -= 360.0;
+            }
+            
+            if (angle_x > 360.0) {
+                angle_x -= 360.0;
+            }
+            
             renderlist.reset();
-            renderlist.insertFace(&face);
+            monkey.reset();
+        
+            monkey.setRotateY(angle_y);
+            monkey.setRotateX(angle_x);
+            monkey.modelToWorld(camera);
+            renderlist.insertMesh(&monkey);
             
             renderlist.removeBackface(camera);
             renderlist.worldToCamera(camera);
@@ -97,5 +116,3 @@ int main(int argc, const char * argv[])
     closeEngine();
     return 0;
 }
-
-#endif
