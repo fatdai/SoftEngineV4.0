@@ -9,7 +9,8 @@
 #include "App.h"
 #include "Global.h"
 #include "FileUtil.h"
-#include "FileUtil.h"
+#include "SDL_ttf.h"
+#include "FPS.h"
 
 TTF_Font* loadTTFFont(const string& font,int size){
     return TTF_OpenFont(FileUtil::getInstance()->getFullPath(font).c_str(),size);
@@ -49,7 +50,7 @@ bool initEngine(const string& resourcesPath){
     FileUtil::getInstance()->setResoursPath(resourcesPath);
     
     //加载字体
-    gFont = loadTTFFont("bluebold.ttf",24);
+    gFont = loadTTFFont("arial.ttf",24);
     if (gFont == NULL) {
         printf("load font bluebold.ttf error.\n");
         return false;
@@ -64,8 +65,9 @@ bool initEngine(const string& resourcesPath){
     gColorYellow = SDL_MapRGB(gSurface->format,255, 255, 0);
     gColorCyan = SDL_MapRGB(gSurface->format,0, 255, 255);
     
+    FPS::getInstance();
+    
     return true;
-
 }
 
 
@@ -82,3 +84,9 @@ void closeEngine(){
     IMG_Quit();
     SDL_Quit();
 }
+
+
+
+
+
+

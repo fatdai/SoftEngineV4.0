@@ -20,6 +20,7 @@
 #include "Color.h"
 #include "Material.h"
 #include "ObjLoader.h"
+#include "FPS.h"
 
 
 // 只渲染一个线框三角形
@@ -72,6 +73,9 @@ int main(int argc, const char * argv[])
     bool quit = false;
     SDL_Event event;
     while (!quit) {
+        
+        FPS::getInstance()->calculateDt();
+        
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) {
                 quit= true;
@@ -109,9 +113,12 @@ int main(int argc, const char * argv[])
         {
             renderClear();
             renderlist.drawWire();
+            FPS::getInstance()->showFPS();
             swapBuffer();
         };
-        SDL_Delay(10);
+        
+        FPS::getInstance()->calculateFPS();
+        SDL_Delay(FPS::getInstance()->getDelayTime());
     }
     closeEngine();
     return 0;

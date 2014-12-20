@@ -43,6 +43,7 @@
 		CEFF10761A457DAB001DBE6F /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10741A457DAB001DBE6F /* ObjLoader.cpp */; };
 		CEFF10791A457DDB001DBE6F /* SDException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10771A457DDB001DBE6F /* SDException.cpp */; };
 		CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */; };
+		CEFF10811A45A1D8001DBE6F /* FPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107F1A45A1D8001DBE6F /* FPS.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -135,6 +136,8 @@
 		CEFF10771A457DDB001DBE6F /* SDException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDException.cpp; sourceTree = "<group>"; };
 		CEFF10781A457DDB001DBE6F /* SDException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDException.h; sourceTree = "<group>"; };
 		CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Draw_Obj_Monkey.cpp; sourceTree = "<group>"; };
+		CEFF107F1A45A1D8001DBE6F /* FPS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPS.cpp; sourceTree = "<group>"; };
+		CEFF10801A45A1D8001DBE6F /* FPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPS.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +177,7 @@
 		CE83BA841A4460AF00C5A0BC /* SoftEngineV4.0 */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF10821A45A8F8001DBE6F /* ui */,
 				CEFF10731A457D9B001DBE6F /* model */,
 				CEFF106C1A456E77001DBE6F /* node */,
 				CEFF105E1A456354001DBE6F /* test */,
@@ -272,6 +276,8 @@
 			children = (
 				CEFF105B1A456344001DBE6F /* App.cpp */,
 				CEFF105C1A456344001DBE6F /* App.h */,
+				CEFF107F1A45A1D8001DBE6F /* FPS.cpp */,
+				CEFF10801A45A1D8001DBE6F /* FPS.h */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -303,6 +309,13 @@
 				CEFF10751A457DAB001DBE6F /* ObjLoader.h */,
 			);
 			name = model;
+			sourceTree = "<group>";
+		};
+		CEFF10821A45A8F8001DBE6F /* ui */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,6 +396,7 @@
 				CE83BAC01A44613500C5A0BC /* MathUtil.cpp in Sources */,
 				CE83BA9C1A44611200C5A0BC /* FaceIndex.cpp in Sources */,
 				CEFF10721A456EB7001DBE6F /* MeshCache.cpp in Sources */,
+				CEFF10811A45A1D8001DBE6F /* FPS.cpp in Sources */,
 				CEFF10501A45163B001DBE6F /* Color.cpp in Sources */,
 				CE83BA9E1A44611200C5A0BC /* Mesh.cpp in Sources */,
 				CEFF106F1A456E89001DBE6F /* Sprite.cpp in Sources */,

@@ -10,14 +10,17 @@
 #define __Soft_Engine_V3_0__Global__
 
 #include <iostream>
+#include <string>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include "Color.h"
+using namespace std;
 
 extern SDL_Surface* gSurface;
 extern SDL_Window* gWindow;
 extern TTF_Font* gFont;
-
+extern int gRenderFaceCount;
 
 //屏幕的大小
 const static int kWINDOW_WIDTH = 800;
@@ -37,6 +40,13 @@ extern Uint32 gColorCyan;
 #define SET_BIT(word,bit_flag)   ((word)=((word) | (bit_flag)))
 #define RESET_BIT(word,bit_flag) ((word)=((word) & (~bit_flag)))
 
+#ifndef _SD_DEBUG_
+#define _SD_DEBUG_
+#endif
 
+//////////////////////////////////////////////////////////////
+//// 一些全局方法
+
+SDL_Surface* createTextSurface(const string& text,const Color& color);
 
 #endif /* defined(__Soft_Engine_V3_0__Global__) */

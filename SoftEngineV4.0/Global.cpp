@@ -21,3 +21,22 @@ Uint32 gColorWhite = 0;
 Uint32 gColorBlack = 0;
 Uint32 gColorYellow = 0;
 Uint32 gColorCyan = 0;
+
+
+// 渲染的面数
+int gRenderFaceCount = 0;
+
+
+//////////////////////////////////////////////////////////////
+//// 一些全局方法
+
+SDL_Surface* createTextSurface(const string& text,const Color& color){
+    SDL_Surface* loadedSurface = TTF_RenderText_Solid(gFont,text.c_str(),SDL_Color{color.r,color.g,color.b});
+    if (loadedSurface == NULL) {
+        printf("创建字体失败 Error : %s\n",SDL_GetError());
+        return NULL;
+    }
+    SDL_Surface* result = SDL_ConvertSurface(loadedSurface,gSurface->format,NULL);
+    SDL_FreeSurface(loadedSurface);
+    return result;
+}

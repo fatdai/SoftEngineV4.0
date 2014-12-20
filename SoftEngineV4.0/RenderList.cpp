@@ -830,6 +830,9 @@ void RenderList::drawWire(){
         draw_line_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
         draw_line_v1(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
         draw_line_v1(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
+#ifdef _SD_DEBUG_
+        ++gRenderFaceCount;
+#endif
     }
 }
 
