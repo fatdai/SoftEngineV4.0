@@ -12,6 +12,8 @@ SDL_Surface* gSurface = nullptr;
 SDL_Window* gWindow = nullptr;
 TTF_Font* gFont = nullptr;
 
+// 显示Text2D文字的Surface
+SDL_Surface* gText2DSurface = nullptr;
 
 // 定义几种常见的颜色
 Uint32 gColorRed = 0;

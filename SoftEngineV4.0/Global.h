@@ -22,6 +22,8 @@ extern SDL_Window* gWindow;
 extern TTF_Font* gFont;
 extern int gRenderFaceCount;
 
+extern SDL_Surface* gText2DSurface;
+
 //屏幕的大小
 const static int kWINDOW_WIDTH = 800;
 const static int kWINDOW_HEIGHT = 600;

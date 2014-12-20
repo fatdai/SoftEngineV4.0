@@ -70,8 +70,14 @@ bool initEngine(const string& resourcesPath){
     return true;
 }
 
-
 void closeEngine(){
+    
+    // free text2d surface
+    if (gText2DSurface) {
+        SDL_FreeSurface(gText2DSurface);
+        gText2DSurface = nullptr;
+    }
+    
     //free font
     TTF_CloseFont(gFont);
     gFont = NULL;
@@ -85,6 +91,10 @@ void closeEngine(){
     SDL_Quit();
 }
 
+void delayEngine(){
+    FPS::getInstance()->calculateFPS();
+    SDL_Delay(FPS::getInstance()->getDelayTime());
+}
 
 
 

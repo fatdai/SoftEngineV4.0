@@ -44,6 +44,7 @@
 		CEFF10791A457DDB001DBE6F /* SDException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10771A457DDB001DBE6F /* SDException.cpp */; };
 		CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */; };
 		CEFF10811A45A1D8001DBE6F /* FPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107F1A45A1D8001DBE6F /* FPS.cpp */; };
+		CEFF10861A45B3BF001DBE6F /* Text2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10841A45B3BF001DBE6F /* Text2D.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -138,6 +139,8 @@
 		CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Draw_Obj_Monkey.cpp; sourceTree = "<group>"; };
 		CEFF107F1A45A1D8001DBE6F /* FPS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPS.cpp; sourceTree = "<group>"; };
 		CEFF10801A45A1D8001DBE6F /* FPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPS.h; sourceTree = "<group>"; };
+		CEFF10841A45B3BF001DBE6F /* Text2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Text2D.cpp; sourceTree = "<group>"; };
+		CEFF10851A45B3BF001DBE6F /* Text2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text2D.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +317,8 @@
 		CEFF10821A45A8F8001DBE6F /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF10841A45B3BF001DBE6F /* Text2D.cpp */,
+				CEFF10851A45B3BF001DBE6F /* Text2D.h */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEFF10861A45B3BF001DBE6F /* Text2D.cpp in Sources */,
 				CEFF106B1A456E1F001DBE6F /* Node.cpp in Sources */,
 				CE5CFF4E1A45056E0060F4C3 /* Light.cpp in Sources */,
 				CE83BAA01A44611200C5A0BC /* Vertex.cpp in Sources */,

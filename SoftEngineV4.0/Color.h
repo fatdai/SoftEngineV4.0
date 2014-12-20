@@ -42,8 +42,6 @@ public:
     static void intToColor_RGB(Color* color,int rgb);
     static void intToColor_RGBA(Color* color,int rgba);
     
- 
-    
 public:
     
     union{

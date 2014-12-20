@@ -21,6 +21,7 @@
 #include "Material.h"
 #include "ObjLoader.h"
 #include "FPS.h"
+#include "Text2D.h"
 
 
 // 只渲染一个线框三角形
@@ -114,11 +115,14 @@ int main(int argc, const char * argv[])
             renderClear();
             renderlist.drawWire();
             FPS::getInstance()->showFPS();
+            
+            // 显示Hello world
+            Text2D::showText("Hello World",100, 300);
+            
             swapBuffer();
         };
         
-        FPS::getInstance()->calculateFPS();
-        SDL_Delay(FPS::getInstance()->getDelayTime());
+        delayEngine();
     }
     closeEngine();
     return 0;

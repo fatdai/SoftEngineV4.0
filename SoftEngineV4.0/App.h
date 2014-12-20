@@ -24,7 +24,8 @@ void closeEngine();
 // 加载字体
 TTF_Font* loadTTFFont(const string& font,int size);
 
-
+// 延时
+void delayEngine();
 
 
 
