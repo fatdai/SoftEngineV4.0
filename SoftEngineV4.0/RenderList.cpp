@@ -838,7 +838,21 @@ void RenderList::drawWire(){
 
 // 绘制实体
 void RenderList::drawSolid(){
-    
+    for (int i = 0; i < num_faces; ++i) {
+        Face* cur_face = &face_data[i];
+        
+        if (!(cur_face->state & FACE_STATE_ACTIVITY) ||
+            (cur_face->state & FACE_STATE_BACKFACE) ||
+            (cur_face->state & FACE_STATE_CLIPPED)) {
+            continue;
+        }
+        
+        Uint32 color = cur_face->lit_color[0].toInt_RGB();
+        draw_fill_triangle_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y,cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, color);
+#ifdef _SD_DEBUG_
+        ++gRenderFaceCount;
+#endif
+    }
 }
 
 

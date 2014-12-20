@@ -45,6 +45,7 @@
 		CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */; };
 		CEFF10811A45A1D8001DBE6F /* FPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF107F1A45A1D8001DBE6F /* FPS.cpp */; };
 		CEFF10861A45B3BF001DBE6F /* Text2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10841A45B3BF001DBE6F /* Text2D.cpp */; };
+		CEFF10961A45BA86001DBE6F /* Draw_Soild_Monkey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10941A45BA86001DBE6F /* Draw_Soild_Monkey.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -141,6 +142,7 @@
 		CEFF10801A45A1D8001DBE6F /* FPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPS.h; sourceTree = "<group>"; };
 		CEFF10841A45B3BF001DBE6F /* Text2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Text2D.cpp; sourceTree = "<group>"; };
 		CEFF10851A45B3BF001DBE6F /* Text2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text2D.h; sourceTree = "<group>"; };
+		CEFF10941A45BA86001DBE6F /* Draw_Soild_Monkey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Draw_Soild_Monkey.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +292,7 @@
 			children = (
 				CEFF105F1A456365001DBE6F /* DrawTriangle_Wire.cpp */,
 				CEFF107B1A459822001DBE6F /* Draw_Obj_Monkey.cpp */,
+				CEFF10941A45BA86001DBE6F /* Draw_Soild_Monkey.cpp */,
 			);
 			name = test;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				CEFF10461A451317001DBE6F /* Global.cpp in Sources */,
 				CE83BA9F1A44611200C5A0BC /* RenderList.cpp in Sources */,
 				CE83BAC41A44613500C5A0BC /* Vec3.cpp in Sources */,
+				CEFF10961A45BA86001DBE6F /* Draw_Soild_Monkey.cpp in Sources */,
 				CE83BAC11A44613500C5A0BC /* Plane3D.cpp in Sources */,
 				CE83BAC51A44613500C5A0BC /* Vec4.cpp in Sources */,
 				CEFF10761A457DAB001DBE6F /* ObjLoader.cpp in Sources */,
