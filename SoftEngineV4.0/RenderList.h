@@ -20,7 +20,7 @@ const static int kNumOfMaxRenderFace = 20000;
 
 //
 //  渲染流程:
-//     物体局部坐标---->model_to_world---->对物体进行cull----->插入到renderlist---->执行背面消除
+//     物体局部坐标---->对物体进行cull---->model_to_world----->插入到renderlist---->执行背面消除
 //----> 进行相机变换 ----> 进行3D裁减 ----> 进行光照计算 ----> 进行透视变换 ----> 视口变换到屏幕
 //
 

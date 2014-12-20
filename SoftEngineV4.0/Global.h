@@ -33,7 +33,9 @@ extern Uint32 gColorYellow;
 extern Uint32 gColorCyan;
 
 
-
+// bit manipulation macros
+#define SET_BIT(word,bit_flag)   ((word)=((word) | (bit_flag)))
+#define RESET_BIT(word,bit_flag) ((word)=((word) & (~bit_flag)))
 
 
 

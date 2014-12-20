@@ -16,7 +16,7 @@ Material::Material(int type){
 }
 
 Material::Material(){
-    mati_type = FLAT;
+    mati_type = 0;
     ka = kd = ks = 1.0;
     texture = nullptr;
 }

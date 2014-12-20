@@ -142,7 +142,7 @@ void RenderList::curDown(Camera* camera){
         
         // 这里最对需要进行判断和裁减的进行处理
         // 完全在视锥体里面的都不需要进行判断
-        if (cur_face->state & FACE_NEED_CUTDOWN) {
+        if (cur_face->state & FACE_STATE_NEED_CUTDOWN) {
             
             float z_factor = 0.5*camera->viewport_w/camera->near;
             

@@ -37,6 +37,11 @@
 		CEFF105D1A456344001DBE6F /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF105B1A456344001DBE6F /* App.cpp */; };
 		CEFF10611A456365001DBE6F /* DrawTriangle_Wire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF105F1A456365001DBE6F /* DrawTriangle_Wire.cpp */; };
 		CEFF10651A4563E7001DBE6F /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10631A4563E7001DBE6F /* FileUtil.cpp */; };
+		CEFF106B1A456E1F001DBE6F /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10691A456E1F001DBE6F /* Node.cpp */; };
+		CEFF106F1A456E89001DBE6F /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF106D1A456E89001DBE6F /* Sprite.cpp */; };
+		CEFF10721A456EB7001DBE6F /* MeshCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10701A456EB7001DBE6F /* MeshCache.cpp */; };
+		CEFF10761A457DAB001DBE6F /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10741A457DAB001DBE6F /* ObjLoader.cpp */; };
+		CEFF10791A457DDB001DBE6F /* SDException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10771A457DDB001DBE6F /* SDException.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +123,16 @@
 		CEFF10621A45639D001DBE6F /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		CEFF10631A4563E7001DBE6F /* FileUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtil.cpp; sourceTree = "<group>"; };
 		CEFF10641A4563E7001DBE6F /* FileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtil.h; sourceTree = "<group>"; };
+		CEFF10691A456E1F001DBE6F /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
+		CEFF106A1A456E1F001DBE6F /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		CEFF106D1A456E89001DBE6F /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
+		CEFF106E1A456E89001DBE6F /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
+		CEFF10701A456EB7001DBE6F /* MeshCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshCache.cpp; sourceTree = "<group>"; };
+		CEFF10711A456EB7001DBE6F /* MeshCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshCache.h; sourceTree = "<group>"; };
+		CEFF10741A457DAB001DBE6F /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjLoader.cpp; sourceTree = "<group>"; };
+		CEFF10751A457DAB001DBE6F /* ObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjLoader.h; sourceTree = "<group>"; };
+		CEFF10771A457DDB001DBE6F /* SDException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDException.cpp; sourceTree = "<group>"; };
+		CEFF10781A457DDB001DBE6F /* SDException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDException.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,9 +172,11 @@
 		CE83BA841A4460AF00C5A0BC /* SoftEngineV4.0 */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF10731A457D9B001DBE6F /* model */,
+				CEFF106C1A456E77001DBE6F /* node */,
 				CEFF105E1A456354001DBE6F /* test */,
 				CEFF105A1A456332001DBE6F /* app */,
-				CEFF10471A45131C001DBE6F /* settings */,
+				CEFF10471A45131C001DBE6F /* support */,
 				CE83BAA11A44611F00C5A0BC /* math */,
 				CE83BA8E1A4460C500C5A0BC /* data */,
 				CE83BA851A4460AF00C5A0BC /* main.cpp */,
@@ -195,6 +212,8 @@
 				CE5CFF4D1A45056E0060F4C3 /* Light.h */,
 				CEFF104E1A45163B001DBE6F /* Color.cpp */,
 				CEFF104F1A45163B001DBE6F /* Color.h */,
+				CEFF10701A456EB7001DBE6F /* MeshCache.cpp */,
+				CEFF10711A456EB7001DBE6F /* MeshCache.h */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -233,15 +252,17 @@
 			name = math;
 			sourceTree = "<group>";
 		};
-		CEFF10471A45131C001DBE6F /* settings */ = {
+		CEFF10471A45131C001DBE6F /* support */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF10771A457DDB001DBE6F /* SDException.cpp */,
+				CEFF10781A457DDB001DBE6F /* SDException.h */,
 				CEFF10631A4563E7001DBE6F /* FileUtil.cpp */,
 				CEFF10641A4563E7001DBE6F /* FileUtil.h */,
 				CEFF10441A451317001DBE6F /* Global.cpp */,
 				CEFF10451A451317001DBE6F /* Global.h */,
 			);
-			name = settings;
+			name = support;
 			sourceTree = "<group>";
 		};
 		CEFF105A1A456332001DBE6F /* app */ = {
@@ -259,6 +280,26 @@
 				CEFF105F1A456365001DBE6F /* DrawTriangle_Wire.cpp */,
 			);
 			name = test;
+			sourceTree = "<group>";
+		};
+		CEFF106C1A456E77001DBE6F /* node */ = {
+			isa = PBXGroup;
+			children = (
+				CEFF10691A456E1F001DBE6F /* Node.cpp */,
+				CEFF106A1A456E1F001DBE6F /* Node.h */,
+				CEFF106D1A456E89001DBE6F /* Sprite.cpp */,
+				CEFF106E1A456E89001DBE6F /* Sprite.h */,
+			);
+			name = node;
+			sourceTree = "<group>";
+		};
+		CEFF10731A457D9B001DBE6F /* model */ = {
+			isa = PBXGroup;
+			children = (
+				CEFF10741A457DAB001DBE6F /* ObjLoader.cpp */,
+				CEFF10751A457DAB001DBE6F /* ObjLoader.h */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEFF106B1A456E1F001DBE6F /* Node.cpp in Sources */,
 				CE5CFF4E1A45056E0060F4C3 /* Light.cpp in Sources */,
 				CE83BAA01A44611200C5A0BC /* Vertex.cpp in Sources */,
 				CE83BABD1A44613500C5A0BC /* CCGeometry.cpp in Sources */,
@@ -322,6 +364,7 @@
 				CEFF10531A45602D001DBE6F /* Render_1.cpp in Sources */,
 				CE83BAC31A44613500C5A0BC /* Vec2.cpp in Sources */,
 				CEFF105D1A456344001DBE6F /* App.cpp in Sources */,
+				CEFF10791A457DDB001DBE6F /* SDException.cpp in Sources */,
 				CE83BABE1A44613500C5A0BC /* CCVertex.cpp in Sources */,
 				CEFF10611A456365001DBE6F /* DrawTriangle_Wire.cpp in Sources */,
 				CE83BA861A4460AF00C5A0BC /* main.cpp in Sources */,
@@ -331,12 +374,15 @@
 				CE83BAC41A44613500C5A0BC /* Vec3.cpp in Sources */,
 				CE83BAC11A44613500C5A0BC /* Plane3D.cpp in Sources */,
 				CE83BAC51A44613500C5A0BC /* Vec4.cpp in Sources */,
+				CEFF10761A457DAB001DBE6F /* ObjLoader.cpp in Sources */,
 				CEFF10651A4563E7001DBE6F /* FileUtil.cpp in Sources */,
 				CE83BAC81A4468BE00C5A0BC /* Camera.cpp in Sources */,
 				CE83BAC01A44613500C5A0BC /* MathUtil.cpp in Sources */,
 				CE83BA9C1A44611200C5A0BC /* FaceIndex.cpp in Sources */,
+				CEFF10721A456EB7001DBE6F /* MeshCache.cpp in Sources */,
 				CEFF10501A45163B001DBE6F /* Color.cpp in Sources */,
 				CE83BA9E1A44611200C5A0BC /* Mesh.cpp in Sources */,
+				CEFF106F1A456E89001DBE6F /* Sprite.cpp in Sources */,
 				CE83BABF1A44613500C5A0BC /* Mat4.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
