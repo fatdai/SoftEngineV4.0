@@ -10,12 +10,12 @@
 
 
 Vertex::Vertex(){
-    memset(m,0,sizeof(float)*9);
+    memset(m,0,sizeof(float)*kVertexSize);
 }
 
 
 Vertex::Vertex(const Vertex& other){
-    for (int i = 0; i < 9; ++i) {
+    for (int i = 0; i < kVertexSize; ++i) {
         m[i] = other.m[i];
     }
 }

@@ -110,19 +110,20 @@ int main(int argc, const char * argv[])
     RenderList renderlist;
     Mesh ball;
     SET_BIT(ball.mati.mati_type,Material::GOURAUD);
-    load_Obj_Vertex(&ball,"ball.obj",Vec3(100, 100, 100),Vec3(0, 0,-100),true);
+    load_Obj_Vertex(&ball,"monkey.obj",Vec3(100, 100, 100),Vec3(0, 0,-100),true);
     
     
     Color ambient(100,100,100);
     Color diffuse(255,255,255);
-    Color specular(255,255,255);
     Vec3  lightDir(0,-1,0);
+    Point3 lightPosition(0,0,50);
     
-    Point3 lightPosition(0,800,0);
+    Light* ambientLight = LightManager::getInstance()->createAmbientLight(Color(100,100,100));
     
-    int ambientIndex = LightManager::getInstance()->createAmbientLight(Color(100,100,100));
+    Light* dirLight = LightManager::getInstance()->createDirLight(diffuse, lightDir);
     
-    int dirLightIndex = LightManager::getInstance()->createLight(LIGHT_STATE_ON,LIGHT_ATTR_POINT, ambient, diffuse, specular,&lightPosition,&lightDir,0.5,0.002, 0, 0, 0, 0);
+    Color pointDiffuse(200,0,0);
+    Light* pointLight = LightManager::getInstance()->createPointLight(pointDiffuse,lightPosition);
     
     bool quit = false;
     SDL_Event event;
@@ -137,18 +138,15 @@ int main(int argc, const char * argv[])
             
             if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.sym == SDLK_LEFT) {
-                    
+                    pointLight->pos.x -= 10;
                 }else if (event.key.keysym.sym == SDLK_RIGHT){
-                 
+                    pointLight->pos.x += 10;
                 }
-//                else if (event.key.keysym.sym == SDLK_UP){
-//                    light1->kl -= 0.001;
-//                    if (light1->kl < 0) {
-//                        light1->kl = 0;
-//                    }
-//                }else if (event.key.keysym.sym == SDLK_DOWN){
-//                    light1->kl += 0.001;
-//                }
+                else if (event.key.keysym.sym == SDLK_UP){
+                    pointLight->pos.z -= 10;
+                }else if (event.key.keysym.sym == SDLK_DOWN){
+                    pointLight->pos.z += 10;
+                }
                 else if (event.key.keysym.sym == SDLK_w){
                     wire = !wire;
                 }else if (event.key.keysym.sym == SDLK_r){
@@ -157,15 +155,13 @@ int main(int argc, const char * argv[])
                     animation = !animation;
                 }else if (event.key.keysym.sym == SDLK_a){
                     // 开启/关闭 环境光
-                    Light* ambientlight = LightManager::getInstance()->getLight(ambientIndex);
-                    if (ambientlight->state == LIGHT_STATE_ON) {
-                        ambientlight->state = LIGHT_STATE_OFF;
+                    if (ambientLight->state == LIGHT_STATE_ON) {
+                        ambientLight->state = LIGHT_STATE_OFF;
                     }else{
-                        ambientlight->state = LIGHT_STATE_ON;
+                        ambientLight->state = LIGHT_STATE_ON;
                     }
                 }else if (event.key.keysym.sym == SDLK_d){
                     // 开启/关闭 方向光
-                    Light* dirLight = LightManager::getInstance()->getLight(dirLightIndex);
                     if (dirLight->state == LIGHT_STATE_ON) {
                         dirLight->state = LIGHT_STATE_OFF;
                     }else{
@@ -178,7 +174,7 @@ int main(int argc, const char * argv[])
         //逻辑
         {
             if (animation) {
-                angle_y += 0.4;
+                angle_y += 0.8;
                 angle_x += 0.2;
                 if (angle_y > 360.0) {
                     angle_y -= 360.0;
@@ -196,7 +192,7 @@ int main(int argc, const char * argv[])
             ball.reset();
             
             ball.setRotateY(angle_y);
-            ball.setRotateX(angle_x);
+         //   ball.setRotateX(angle_x);
             ball.modelToWorld(camera);
             renderlist.insertMesh(&ball);
             
@@ -207,6 +203,7 @@ int main(int argc, const char * argv[])
             renderlist.curDown(camera);
             renderlist.light(camera);
             renderlist.perspective(camera);
+            renderlist.sort(RenderList::SORT_FACE_FARZ);
             renderlist.toscreen(camera);
         };
         
@@ -214,18 +211,9 @@ int main(int argc, const char * argv[])
         {
             renderClear();
             
-            if (wire) {
-                renderlist.drawWire();
-            }else{
-                renderlist.drawSolid();
-            }
+            renderlist.draw();
             
             FPS::getInstance()->showFPS();
-            
-//            for (int i = 0; i < kNumFace; ++i) {
-//                draw_gouraud_triangle(&testFace[i]);
-//            }
-
             
             if (wire) {
                 Text2D::showText("Render mode:Wire", 0, 90);

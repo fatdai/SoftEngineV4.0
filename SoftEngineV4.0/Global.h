@@ -39,8 +39,14 @@ extern Uint32 gColorCyan;
 
 
 // bit manipulation macros
+// 位操作
 #define SET_BIT(word,bit_flag)   ((word)=((word) | (bit_flag)))
 #define RESET_BIT(word,bit_flag) ((word)=((word) & (~bit_flag)))
+
+// 比较大小
+// used to compute the min and max of two expresions
+#define MIN(a, b)  (((a) < (b)) ? (a) : (b))
+#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
 
 #ifndef _SD_DEBUG_
 #define _SD_DEBUG_

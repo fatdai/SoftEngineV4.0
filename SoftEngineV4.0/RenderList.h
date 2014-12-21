@@ -28,6 +28,12 @@ class RenderList{
     
 public:
     
+    enum{
+        SORT_FACE_AVGZ,  // 平均z
+        SORT_FACE_NEARZ, // 按照最小的z
+        SORT_FACE_FARZ,  // 按照最大的z
+    };
+    
     RenderList();
     
     void reset();
@@ -50,19 +56,31 @@ public:
     void light(Camera* camera);
     
     // 执行透视变换
+    // 注意投影变换后z的变化
+    // 比如 点x0(0,0,-5,1) 和点 x1(0,0,-10,1);
+    // 投影变换前 x0 > x1
+    // 投影变换后 x0 < x1
     void perspective(Camera* camera);
     
     // 到屏幕
     void toscreen(Camera* camera);
     
+    // 进行z排序
+    void sort(int sort_method = SORT_FACE_AVGZ);
+    
     ////////////////////////////////////////////////////////
     // 绘制函数
     
     // 绘制线框
+    // 被废弃
     void drawWire();
     
     // 绘制实体
+    // 被废弃
     void drawSolid();
+    
+    // 绘制
+    void draw();
     
 public:
     
@@ -72,6 +90,11 @@ public:
     // 所有需要渲染的面
     Face face_data[kNumOfMaxRenderFace];
     
+private:
+    
+    static int compare_avgz_face(const void *arg1, const void *arg2);
+    static int compare_farz_face(const void *arg1, const void *arg2);
+    static int compare_nearz_face(const void *arg1, const void *arg2);
 };
 
 #endif /* defined(__SD_LIB__RenderList__) */

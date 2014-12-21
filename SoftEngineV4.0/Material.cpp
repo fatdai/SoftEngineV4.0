@@ -11,12 +11,10 @@
 
 Material::Material(int type){
     mati_type = type;
-    ka = kd = ks = 1.0;
     texture = nullptr;
 }
 
 Material::Material(){
-    mati_type = 0;
-    ka = kd = ks = 1.0;
+    mati_type = WIRE;
     texture = nullptr;
 }

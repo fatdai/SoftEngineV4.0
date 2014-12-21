@@ -20,15 +20,11 @@ public:
     Material();
     
     enum{
-        FLAT = 1,
-        GOURAUD = 1<<1,
-        TEXTURE = 1<<2,
-        TEXTURE_FLAT = 1<<3,
-        TEXTURE_GOURAUD = 1<<4,
+        WIRE,  // 线框
+        FLAT,  // 恒定着色
+        GOURAUD, // gouraud 着色
+        TEXTURE, // 纹理
     };
-    
-    // 光照反射系数
-    float ka,kd,ks;
     
     // 材质类型
     int mati_type;

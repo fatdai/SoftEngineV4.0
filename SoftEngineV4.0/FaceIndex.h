@@ -17,6 +17,14 @@
 class FaceIndex{
     
 public:
+    
+    FaceIndex(){
+        state = 0;
+        vlist = nullptr;
+        vert[0] = -1;
+        vert[1] = -1;
+        vert[2] = -1;
+    };
         
     // 面状态
     int state;

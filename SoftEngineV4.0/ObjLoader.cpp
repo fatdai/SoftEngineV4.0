@@ -310,15 +310,20 @@ int load_Obj_Vertex_Tex(Mesh* obj,
         obj->vlist_local[vertex2].y = v2.y * scale.y;
         obj->vlist_local[vertex2].z = v2.z * scale.z;
         
-        
         obj->vlist_local[vertex0].tu = texCoords[2*tex0];
         obj->vlist_local[vertex0].tv = texCoords[2*tex0+1];
+        
         
         obj->vlist_local[vertex1].tu = texCoords[2*tex1];
         obj->vlist_local[vertex1].tv = texCoords[2*tex1+1];
         
+        
         obj->vlist_local[vertex2].tu = texCoords[2*tex2];
         obj->vlist_local[vertex2].tv = texCoords[2*tex2+1];
+        
+        SET_BIT(obj->vlist_local[vertex0].attr,VERTEX_ATTR_TEXTURE|VERTEX_ATTR_POINT);
+        SET_BIT(obj->vlist_local[vertex1].attr,VERTEX_ATTR_TEXTURE|VERTEX_ATTR_POINT);
+        SET_BIT(obj->vlist_local[vertex2].attr,VERTEX_ATTR_TEXTURE|VERTEX_ATTR_POINT);
         
         if (needNormal) {
             Vec3 v01 = v1 - v0;
@@ -329,6 +334,10 @@ int load_Obj_Vertex_Tex(Mesh* obj,
             vertexnor_to_hmn(hmn,vertex0,vn);
             vertexnor_to_hmn(hmn,vertex1,vn);
             vertexnor_to_hmn(hmn,vertex2,vn);
+            
+            SET_BIT(obj->vlist_local[vertex0].attr,VERTEX_ATTR_NORMAL);
+            SET_BIT(obj->vlist_local[vertex1].attr,VERTEX_ATTR_NORMAL);
+            SET_BIT(obj->vlist_local[vertex2].attr,VERTEX_ATTR_NORMAL);
         }
         
         obj->faceIndexs[i].state = FACE_STATE_ACTIVITY;
@@ -339,6 +348,7 @@ int load_Obj_Vertex_Tex(Mesh* obj,
         obj->faceIndexs[i].vert[0] = vertex0;
         obj->faceIndexs[i].vert[1] = vertex1;
         obj->faceIndexs[i].vert[2] = vertex2;
+        
     }
     
     compute_object_radius(obj);
@@ -585,6 +595,10 @@ int load_Obj_Vertex_Nor(Mesh* obj,
         obj->vlist_local[vertex2].ny = texCoords[3*nor2+1];
         obj->vlist_local[vertex2].nz = texCoords[3*nor2+2];
         
+        SET_BIT(obj->vlist_local[vertex0].attr,VERTEX_ATTR_NORMAL|VERTEX_ATTR_POINT);
+        SET_BIT(obj->vlist_local[vertex1].attr,VERTEX_ATTR_NORMAL|VERTEX_ATTR_POINT);
+        SET_BIT(obj->vlist_local[vertex2].attr,VERTEX_ATTR_NORMAL|VERTEX_ATTR_POINT);
+        
         ///////////
         // 给 faceIndexs 赋值
         obj->faceIndexs[i].state = FACE_STATE_ACTIVITY;
@@ -821,6 +835,7 @@ int load_Obj_Vertex(Mesh* obj,
     for (int i = 0; i < polys.size(); ++i) {
         
         FaceIndexHolder* ploy_index = &polys[i];
+        
         int vertex0 = ploy_index->vert[0];
         int vertex1 = ploy_index->vert[1];
         int vertex2 = ploy_index->vert[2];
@@ -842,7 +857,12 @@ int load_Obj_Vertex(Mesh* obj,
         obj->vlist_local[vertex2].y = v2.y * scale.y;
         obj->vlist_local[vertex2].z = v2.z * scale.z;
         
+        SET_BIT(obj->vlist_local[vertex0].attr,VERTEX_ATTR_POINT);
+        SET_BIT(obj->vlist_local[vertex1].attr,VERTEX_ATTR_POINT);
+        SET_BIT(obj->vlist_local[vertex2].attr,VERTEX_ATTR_POINT);
+        
         if (needNormal) {
+            
             Vec3 v01 = v1 - v0;
             Vec3 v02 = v2 - v0;
             Vec3 vn;
@@ -851,6 +871,10 @@ int load_Obj_Vertex(Mesh* obj,
             vertexnor_to_hmn(hmn,vertex0,vn);
             vertexnor_to_hmn(hmn,vertex1,vn);
             vertexnor_to_hmn(hmn,vertex2,vn);
+            
+            SET_BIT(obj->vlist_local[vertex0].attr,VERTEX_ATTR_NORMAL);
+            SET_BIT(obj->vlist_local[vertex1].attr,VERTEX_ATTR_NORMAL);
+            SET_BIT(obj->vlist_local[vertex2].attr,VERTEX_ATTR_NORMAL);
         }
         
         obj->faceIndexs[i].state = FACE_STATE_ACTIVITY;

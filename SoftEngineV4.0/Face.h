@@ -33,7 +33,6 @@ public:
     int state;
     
     // 变换前和变换后顶点
- //   Vertex vlist_local[3];
     Vertex vlist_trans[3];
     
     // 面材质

@@ -64,9 +64,15 @@ void RenderList::insertMesh(Mesh* mesh){
         
         // 指向变换后的顶点
         Vertex* old_local = face_index->vlist;
+        Material old_mati = face_index->mati;
+        
         face_index->vlist = mesh->vlist_trans;
+        face_index->mati = mesh->mati;
+        
         insertFaceIndex(face_index);
+        
         face_index->vlist = old_local;
+        face_index->mati = old_mati;
     }
 }
 
@@ -789,7 +795,7 @@ void RenderList::perspective(Camera* camera){
         
         // 将齐次坐标转换成 非齐次坐标
         for (int vertex = 0; vertex < 3; ++vertex) {
-            tmpz = -1.0/cur_face->vlist_trans[vertex].z;
+            tmpz = -1.0/cur_face->vlist_trans[vertex].z; 
             camera->mper.transformPoint(cur_face->vlist_trans[vertex].v,&cur_face->vlist_trans[vertex].v);
             cur_face->vlist_trans[vertex].v *= tmpz;
         }
@@ -861,7 +867,148 @@ void RenderList::drawSolid(){
     }
 }
 
+void RenderList::draw(){
+    
+    for (int i = 0; i < num_faces; ++i) {
+        Face* cur_face = &face_data[i];
+        
+        if (!(cur_face->state & FACE_STATE_ACTIVITY) ||
+            (cur_face->state & FACE_STATE_BACKFACE) ||
+            (cur_face->state & FACE_STATE_CLIPPED)) {
+            continue;
+        }
+        
+        if (cur_face->mati.mati_type == Material::WIRE) {
+            
+            Uint32 color = cur_face->lit_color[0].toInt_RGB();
+            draw_line_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
+            draw_line_v1(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
+            draw_line_v1(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
+            
+        }else if (cur_face->mati.mati_type == Material::FLAT){
+            
+            Uint32 color = cur_face->lit_color[0].toInt_RGB();
+            draw_fill_triangle_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y,cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, color);
+            
+        }else if (cur_face->mati.mati_type == Material::GOURAUD){
+            
+            draw_gouraud_triangle(cur_face);
+            
+        }else if (cur_face->mati.mati_type == Material::TEXTURE){
+            
+            draw_texture_triangle(cur_face);
+            
+        }
+        
+#ifdef _SD_DEBUG_
+        ++gRenderFaceCount;
+#endif
+    }
+}
 
+
+////////////////////////////////////////////////////////////////////////////////
+
+int RenderList::compare_avgz_face(const void *arg1, const void *arg2)
+{
+    // this function comapares the average z's of two polygons and is used by the
+    // depth sort surface ordering algorithm
+    
+    float z1, z2;
+    
+    Face* poly_1 = (Face*)arg1;
+    Face* poly_2 = (Face*)arg2;
+    
+    // compute z average of each polygon
+    z1 = (float)0.33333*(poly_1->vlist_trans[0].z + poly_1->vlist_trans[1].z + poly_1->vlist_trans[2].z);
+    
+    // now polygon 2
+    z2 = (float)0.33333*(poly_2->vlist_trans[0].z + poly_2->vlist_trans[1].z + poly_2->vlist_trans[2].z);
+    
+    // compare z1 and z2, such that polys' will be sorted in descending Z order
+    if (z1 > z2){
+        return(-1);
+    }else{
+        if (z1 < z2){
+             return(1);
+        }
+        else{
+            return(0);
+        }
+    }
+} // end Compare_AvgZ_POLYF4DV2
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+int RenderList::compare_nearz_face(const void *arg1, const void *arg2)
+{
+    // this function comapares the closest z's of two polygons and is used by the
+    // depth sort surface ordering algorithm
+    
+    float z1, z2;
+    
+    Face* poly_1 = (Face*)arg1;
+    Face* poly_2 = (Face*)arg2;
+    
+    // compute the near z of each polygon
+    z1 = MIN(poly_1->vlist_trans[0].z, poly_1->vlist_trans[1].z);
+    z1 = MIN(z1, poly_1->vlist_trans[2].z);
+    
+    z2 = MIN(poly_2->vlist_trans[0].z, poly_2->vlist_trans[1].z);
+    z2 = MIN(z2, poly_2->vlist_trans[2].z);
+    
+    // compare z1 and z2, such that polys' will be sorted in descending Z order
+    if (z1 > z2)
+        return(-1);
+    else
+        if (z1 < z2)
+            return(1);
+        else
+            return(0);
+    
+} // end Compare_NearZ_POLYF4DV2
+
+////////////////////////////////////////////////////////////////////////////////
+
+int RenderList::compare_farz_face(const void *arg1, const void *arg2)
+{
+    // this function comapares the farthest z's of two polygons and is used by the
+    // depth sort surface ordering algorithm
+    
+    float z1, z2;
+    
+    Face* poly_1 = (Face*)arg1;
+    Face* poly_2 = (Face*)arg2;
+
+    
+    // compute the near z of each polygon
+    z1 = MAX(poly_1->vlist_trans[0].z, poly_1->vlist_trans[1].z);
+    z1 = MAX(z1, poly_1->vlist_trans[2].z);
+    
+    z2 = MAX(poly_2->vlist_trans[0].z, poly_2->vlist_trans[1].z);
+    z2 = MAX(z2, poly_2->vlist_trans[2].z);
+    
+    // compare z1 and z2, such that polys' will be sorted in descending Z order
+    if (z1 > z2)
+        return(-1);
+    else
+        if (z1 < z2)
+            return(1);
+        else
+            return(0);
+    
+} // end Compare_FarZ_POLYF4DV2
+
+void RenderList::sort(int sort_method){
+    if (sort_method == SORT_FACE_AVGZ) {
+        qsort((void*)face_data,num_faces,sizeof(Face),RenderList::compare_avgz_face);
+    }else if (sort_method == SORT_FACE_NEARZ){
+        qsort((void*)face_data,num_faces,sizeof(Face),RenderList::compare_nearz_face);
+    }else if (sort_method == SORT_FACE_FARZ){
+        qsort((void*)face_data,num_faces,sizeof(Face),RenderList::compare_farz_face);
+    }
+}
 
 
 

@@ -13,29 +13,29 @@
 #include "ZCMath.h"
 
 
-//class Vec3{
-//public:
-//    float x,y,z;
-//};
-//
-//class Vec2{
-//public:
-//    float x,y;
-//};
-//
-//typedef  Vec3  Point3;
-//typedef  Vec2  Point2;
+
+
+enum{
+    VERTEX_ATTR_POINT = 1,
+    VERTEX_ATTR_NORMAL = 1<<1,
+    VERTEX_ATTR_TEXTURE = 1<<2,
+};
 
 class Vertex{
     
 public:
     
+    enum{
+        kVertexSize = 9,
+    };
+    
     Vertex();
     Vertex(const Vertex& other);
     ~Vertex(){};
+    
     union{
         
-        float m[9];
+        float m[kVertexSize];
         
         struct{
             Point3 v;
@@ -47,7 +47,7 @@ public:
             float x,y,z;
             float nx,ny,nz;
             float tu,tv;
-            int color;
+            int attr;
         };
     };
 };

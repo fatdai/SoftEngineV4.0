@@ -82,6 +82,9 @@ public:
 ///////////////////////////////////////////
 // 创建一个管理光源的
 
+#ifndef LightSystem
+#define LightSystem LightManager::getInstance()
+#endif
 
 class LightManager{
     
@@ -99,23 +102,32 @@ public:
     // 创建一个灯光
     // 创建成功返回 灯光的 index
     // 否则返回 -1
-    int createLight(int pState,
-                       int pAttr,
-                       Color pAmbient,
-                       Color pDiffuse,
-                       Color pSpecular,
-                       const Point3* pPos,
-                       const Vec3* pDir,
-                       float pkc,
-                       float pkl,
-                       float pkq,
-                       float pSpot_inner,
-                       float pSpot_outer,
-                       float ppf
-                    );
+//    int createLight(int pState,
+//                       int pAttr,
+//                       Color pAmbient,
+//                       Color pDiffuse,
+//                       Color pSpecular,
+//                       const Point3* pPos,
+//                       const Vec3* pDir,
+//                       float pkc,
+//                       float pkl,
+//                       float pkq,
+//                       float pSpot_inner,
+//                       float pSpot_outer,
+//                       float ppf
+//                    );
     
     // 创建一个环境光
-    int createAmbientLight(const Color& pAmbient);
+    Light* createAmbientLight(const Color& pAmbient);
+    
+    // 创建一个定向光
+    Light* createDirLight(const Color& pDiffuse,const Vec3& dir);
+    
+    // 创建一个点定位光
+    Light* createPointLight(const Color& pDiffuse,const Point3& pPos,float pkc = 1.0,float pkl = 0.01,float pkq = 0.0);
+    
+    // 创建一个聚光灯
+    Light* createSpotLight(const Color& pDiffuse,const Point3& pPos,float pkc = 1.0,float pkl = 0.01,float pkq = 0.0);
     
     void transformLight(Camera* camera);
     
@@ -129,8 +141,7 @@ public:
     
     // 灯数
     int num_light;
-    
-    
+
 };
 
 

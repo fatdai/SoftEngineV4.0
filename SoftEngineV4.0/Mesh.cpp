@@ -79,10 +79,17 @@ void Mesh::modelToWorld(Camera* camera){
         }
         
         for (int i = 0;i < num_vertices; ++i) {
-            mat.transformPoint(vlist_local[i].v,&tmpPoint);
-            vlist_trans[i].v = world_pos + tmpPoint;
-            mat.transformVector(vlist_local[i].n,&vlist_trans[i].n);
-            vlist_trans[i].t = vlist_local[i].t;
+            // 变换顶点
+            if (vlist_local[i].attr & VERTEX_ATTR_POINT) {
+                mat.transformPoint(vlist_local[i].v,&tmpPoint);
+                vlist_trans[i].v = world_pos + tmpPoint;
+            }
+            
+            // 变换法线
+            if (vlist_local[i].attr & VERTEX_ATTR_NORMAL) {
+                mat.transformVector(vlist_local[i].n,&vlist_trans[i].n);
+                vlist_trans[i].t = vlist_local[i].t;
+            }
         }
     }
 }
