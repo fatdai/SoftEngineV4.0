@@ -99,4 +99,15 @@ void FPS::calculateFPS(){
     
 }
 
+void FPS::release(){
+    if (_fpsSurface) {
+        SDL_FreeSurface(_fpsSurface);
+        _fpsSurface = nullptr;
+    }
+    
+    if (_renderFaceSurface) {
+        SDL_FreeSurface(_renderFaceSurface);
+        _renderFaceSurface = nullptr;
+    }
+}
 

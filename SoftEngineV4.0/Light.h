@@ -13,6 +13,7 @@
 #include "ZCMath.h"
 #include "Global.h"
 #include "Color.h"
+#include "Camera.h"
 
 enum{
     LIGHT_ATTR_AMBIENT = 1, // 环境光
@@ -112,6 +113,15 @@ public:
                        float pSpot_outer,
                        float ppf
                     );
+    
+    // 创建一个环境光
+    int createAmbientLight(const Color& pAmbient);
+    
+    void transformLight(Camera* camera);
+    
+    Light* getLight(int index){
+        return &mLights[index];
+    };
     
 public:
     

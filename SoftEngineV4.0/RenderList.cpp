@@ -519,7 +519,7 @@ void RenderList::light(Camera* camera){
                     Vec3::cross(v01,v02,&vn);
                     vn.normalize();
                     
-                    float dp = Vec3::dot(vn,light->trans_dir);
+                    float dp = Vec3::dot(vn,-light->trans_dir);
                     
                     if (dp > 0) {
                         r_sum += (light->c_diffuse.r * cur_face->lit_color[0].r * dp / 256);
@@ -847,8 +847,14 @@ void RenderList::drawSolid(){
             continue;
         }
         
-        Uint32 color = cur_face->lit_color[0].toInt_RGB();
-        draw_fill_triangle_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y,cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, color);
+        if (cur_face->mati.mati_type & Material::FLAT) {
+            Uint32 color = cur_face->lit_color[0].toInt_RGB();
+            draw_fill_triangle_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y,cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, color);
+        }else if (cur_face->mati.mati_type & Material::GOURAUD){
+            draw_gouraud_triangle(cur_face);
+        }
+        
+
 #ifdef _SD_DEBUG_
         ++gRenderFaceCount;
 #endif

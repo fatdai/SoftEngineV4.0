@@ -80,3 +80,29 @@ int LightManager::createLight(
     ++num_light;
     return (num_light-1);
 }
+
+int LightManager::createAmbientLight(const Color& pAmbient){
+    if (num_light > MAX_LIGHT_COUNT) {
+        printf("最多只支持8盏灯......\n");
+        return -1;
+    }
+    
+    mLights[num_light].state = LIGHT_STATE_ON;
+    mLights[num_light].attr = LIGHT_ATTR_AMBIENT;
+    
+    mLights[num_light].c_ambient = pAmbient;
+    mLights[num_light].index = num_light;
+    ++num_light;
+    return (num_light-1);
+}
+
+void LightManager::transformLight(Camera* camera){
+    
+    for (int i = 0 ; i < num_light; ++i) {
+        Light* light = &mLights[i];
+        if (light->state == LIGHT_STATE_ON) {
+            camera->mcam.transformVector(light->dir,&light->trans_dir);
+            camera->mcam.transformPoint(light->pos,&light->trans_pos);
+        }
+    }
+}

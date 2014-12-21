@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "FaceIndex.h"
 #include "Camera.h"
+#include "Color.h"
 
 enum{
     MESH_STATE_VISIBLE = 1,
@@ -69,6 +70,9 @@ public:
     void setRotateX(float degressX);
     void setRotateY(float degressY);
     void setRotateZ(float degressZ);
+    
+    // 设置颜色
+    void setColor(const Color& color);
     
 private:
     

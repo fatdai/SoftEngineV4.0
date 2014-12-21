@@ -81,7 +81,7 @@ void Mesh::modelToWorld(Camera* camera){
         for (int i = 0;i < num_vertices; ++i) {
             mat.transformPoint(vlist_local[i].v,&tmpPoint);
             vlist_trans[i].v = world_pos + tmpPoint;
-            vlist_trans[i].n = vlist_local[i].n;
+            mat.transformVector(vlist_local[i].n,&vlist_trans[i].n);
             vlist_trans[i].t = vlist_local[i].t;
         }
     }
@@ -164,3 +164,8 @@ void Mesh::setRotateZ(float degressZ){
     Mat4::createRotationZ(MATH_DEG_TO_RAD(degressZ),&rotZ);
 }
 
+void Mesh::setColor(const Color& color){
+    for (int i = 0;i < num_faces; ++i) {
+        faceIndexs[i].lit_color[0] = color;
+    }
+}

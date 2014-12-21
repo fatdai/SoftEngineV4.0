@@ -48,6 +48,8 @@ public:
         return _delay_time;
     }
     
+    void release();
+    
 private:
     
     Uint32 _start;

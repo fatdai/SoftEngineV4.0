@@ -1569,17 +1569,17 @@ void draw_gouraud_triangle(Face* face)       // bytes per line, 320, 640 etc.
 //    SDL_GetRGB(face->lit_color[v1], gSurface->format,&r_base1, &g_base1, &b_base1);
 //    SDL_GetRGB(face->lit_color[v2], gSurface->format,&r_base2, &g_base2, &b_base2);
     
-    r_base0 = face->lit_color[0].r;
-    g_base0 = face->lit_color[0].g;
-    b_base0 = face->lit_color[0].b;
+    r_base0 = face->lit_color[v0].r;
+    g_base0 = face->lit_color[v0].g;
+    b_base0 = face->lit_color[v0].b;
     
-    r_base1 = face->lit_color[1].r;
-    g_base1 = face->lit_color[1].g;
-    b_base1 = face->lit_color[1].b;
+    r_base1 = face->lit_color[v1].r;
+    g_base1 = face->lit_color[v1].g;
+    b_base1 = face->lit_color[v1].b;
     
-    r_base2 = face->lit_color[2].r;
-    g_base2 = face->lit_color[2].g;
-    b_base2 = face->lit_color[2].b;
+    r_base2 = face->lit_color[v2].r;
+    g_base2 = face->lit_color[v2].g;
+    b_base2 = face->lit_color[v2].b;
     
     // extract vertices for processing, now that we have order
     x0  = (int)(face->vlist_trans[v0].x+0.5);
@@ -2042,7 +2042,11 @@ void draw_gouraud_triangle(Face* face)       // bytes per line, 320, 640 etc.
                     dwdyl = ((tw1 - tw0) << FIXP16_SHIFT)/dyl;   
                     
                     // RHS
-                    dyr = (y2 - y0);	
+                    dyr = (y2 - y0);
+                    
+                    if (dyr == 0) {
+                        dyr = 1;
+                    }
                     
                     dxdyr = ((x2 - x0)   << FIXP16_SHIFT)/dyr;
                     dudyr = ((tu2 - tu0) << FIXP16_SHIFT)/dyr;  

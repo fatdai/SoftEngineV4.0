@@ -50,7 +50,7 @@ bool initEngine(const string& resourcesPath){
     FileUtil::getInstance()->setResoursPath(resourcesPath);
     
     //加载字体
-    gFont = loadTTFFont("arial.ttf",24);
+    gFont = loadTTFFont("arial.ttf",16);
     if (gFont == NULL) {
         printf("load font bluebold.ttf error.\n");
         return false;
@@ -77,6 +77,9 @@ void closeEngine(){
         SDL_FreeSurface(gText2DSurface);
         gText2DSurface = nullptr;
     }
+    
+    //free fps
+    FPS::getInstance()->release();
     
     //free font
     TTF_CloseFont(gFont);
