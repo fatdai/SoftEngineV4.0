@@ -74,6 +74,10 @@ public:
     // 设置颜色
     void setColor(const Color& color);
     
+    void setMaterialType(int type){
+        mati.mati_type = type;
+    }
+    
 private:
     
     // 进行 cull

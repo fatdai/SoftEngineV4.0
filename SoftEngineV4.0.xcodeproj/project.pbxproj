@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE52DF781A46EA120051DB4E /* Test_Texture_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF761A46EA120051DB4E /* Test_Texture_1.cpp */; };
+		CE52DF7B1A46F84A0051DB4E /* Test_Zbuffer_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */; };
 		CE5CFF4E1A45056E0060F4C3 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE5CFF4C1A45056E0060F4C3 /* Light.cpp */; };
 		CE83BA861A4460AF00C5A0BC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE83BA851A4460AF00C5A0BC /* main.cpp */; };
 		CE83BA881A4460AF00C5A0BC /* SoftEngineV4_0.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE83BA871A4460AF00C5A0BC /* SoftEngineV4_0.1 */; };
@@ -64,6 +66,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE52DF761A46EA120051DB4E /* Test_Texture_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test_Texture_1.cpp; sourceTree = "<group>"; };
+		CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test_Zbuffer_1.cpp; sourceTree = "<group>"; };
 		CE5CFF4C1A45056E0060F4C3 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
 		CE5CFF4D1A45056E0060F4C3 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
 		CE83BA821A4460AF00C5A0BC /* SoftEngineV4.0 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SoftEngineV4.0; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,6 +303,8 @@
 				CEFF10941A45BA86001DBE6F /* Draw_Soild_Monkey.cpp */,
 				CEFF10971A45BF52001DBE6F /* Draw_Base_Scene.cpp */,
 				CEFF109A1A45CB8E001DBE6F /* Test_Light_1.cpp */,
+				CE52DF761A46EA120051DB4E /* Test_Texture_1.cpp */,
+				CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */,
 			);
 			name = test;
 			sourceTree = "<group>";
@@ -390,6 +396,7 @@
 				CE83BABD1A44613500C5A0BC /* CCGeometry.cpp in Sources */,
 				CEFF10591A456174001DBE6F /* TextureCache.cpp in Sources */,
 				CEFF109C1A45CB8E001DBE6F /* Test_Light_1.cpp in Sources */,
+				CE52DF7B1A46F84A0051DB4E /* Test_Zbuffer_1.cpp in Sources */,
 				CE83BA9D1A44611200C5A0BC /* Material.cpp in Sources */,
 				CE83BAC21A44613500C5A0BC /* Quaternion.cpp in Sources */,
 				CE83BA9B1A44611200C5A0BC /* Face.cpp in Sources */,
@@ -404,6 +411,7 @@
 				CEFF10461A451317001DBE6F /* Global.cpp in Sources */,
 				CE83BA9F1A44611200C5A0BC /* RenderList.cpp in Sources */,
 				CE83BAC41A44613500C5A0BC /* Vec3.cpp in Sources */,
+				CE52DF781A46EA120051DB4E /* Test_Texture_1.cpp in Sources */,
 				CEFF10961A45BA86001DBE6F /* Draw_Soild_Monkey.cpp in Sources */,
 				CEFF10991A45BF52001DBE6F /* Draw_Base_Scene.cpp in Sources */,
 				CE83BAC11A44613500C5A0BC /* Plane3D.cpp in Sources */,

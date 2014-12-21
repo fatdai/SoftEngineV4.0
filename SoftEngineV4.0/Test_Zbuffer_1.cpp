@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 user. All rights reserved.
 //
 
-#if 0
+#if 1
 
 #include "App.h"
 #include "Global.h"
@@ -32,57 +32,31 @@ bool wire = false;
 bool remove_back_face = true;
 bool animation = true;
 
-
-#define kNumFace 1
-Face testFace[2*kNumFace];
-
+#define kFaceCount 100
+Face mFace[kFaceCount];
 void initPoly(){
-    // 随即绘制100个三角形
-    for (int i = 0; i < kNumFace; ++i) {
-        
-        int x0 = 200;
-        int y0 = 400;
-        
-        int x1 = 600;
-        int y1 = 400;
-        
-        int x2 = 600;
-        int y2 = 100;
-        
-        int x3 = 200;
-        int y3 = 100;
-        
-        Face face;
-        face.vlist_trans[0].x = x0;
-        face.vlist_trans[0].y = y0;
-        face.lit_color[0] = Color(255, 0, 0);
-        
-        face.vlist_trans[1].x = x1;
-        face.vlist_trans[1].y = y1;
-        face.lit_color[1] = Color(0,255, 0);
-        
-        face.vlist_trans[2].x = x2;
-        face.vlist_trans[2].y = y2;
-        face.lit_color[2] = Color(0, 0,255);
-        
-        testFace[2*i] = face;
-        
-        /////////////////////////////////////
-        Face face1;
-        face1.vlist_trans[0].x = x0;
-        face1.vlist_trans[0].y = y0;
-        face1.lit_color[0] = Color(255, 0, 0);
-        
-        face1.vlist_trans[1].x = x2;
-        face1.vlist_trans[1].y = y2;
-        face1.lit_color[1] = Color(0,255, 0);
-        
-        face1.vlist_trans[2].x = x3;
-        face1.vlist_trans[2].y = y3;
-        face1.lit_color[2] = Color(0, 0,255);
-        testFace[2*i+1] = face1;
 
+    for (int i = 0; i < kFaceCount ; ++i) {
+        mFace[i].state = FACE_STATE_ACTIVITY | FACE_STATE_NEED_CUTDOWN;
+        mFace[i].mati.mati_type = Material::GOURAUD;
+        
+        mFace[i].vlist_trans[0].x = rand()%600 - 300;
+        mFace[i].vlist_trans[0].y = rand()%800 - 400;
+        mFace[i].vlist_trans[0].z = rand()%400 - 200;
+        
+        mFace[i].vlist_trans[1].x = rand()%600 - 300;
+        mFace[i].vlist_trans[1].y = rand()%800 - 400;
+        mFace[i].vlist_trans[1].z = rand()%400 - 200;
+        
+        mFace[i].vlist_trans[2].x = rand()%600 - 300;
+        mFace[i].vlist_trans[2].y = rand()%800 - 400;
+        mFace[i].vlist_trans[2].z = rand()%400 - 200;
+        
+        mFace[i].lit_color[0] = Color(255, 0, 0);
+        mFace[i].lit_color[1] = Color(0, 255, 0);
+        mFace[i].lit_color[2] = Color(0, 0, 255);
     }
+    
 }
 
 int main(int argc, const char * argv[])
@@ -94,6 +68,7 @@ int main(int argc, const char * argv[])
     
     initPoly();
     
+    ////////////////////////////////////////////////////////////
     //创建相机
     Vec3 cam_pos(0,0,300);
     Vec3 cam_dir(0,0,0);
@@ -106,25 +81,44 @@ int main(int argc, const char * argv[])
     
     // 球面 UVN 相机
     Camera* camera = new Camera(cam_pos,cam_dir,near,far,fovy,kWINDOW_WIDTH,kWINDOW_HEIGHT,CameraMode::CAM_MODEL_UVN_SPHERICAL);
+    // end of 创建相机
+    ////////////////////////////////////////////////////////////
     
-    RenderList renderlist;
-    Mesh ball;
-    SET_BIT(ball.mati.mati_type,Material::GOURAUD);
-    load_Obj_Vertex(&ball,"monkey.obj",Vec3(100, 100, 100),Vec3(0, 0,-100),true);
-    
-    
+    ////////////////////////////////////////////////////////////
+    // 创建灯光
     Color ambient(100,100,100);
     Color diffuse(255,255,255);
     Vec3  lightDir(0,-1,0);
     Point3 lightPosition(0,0,50);
     
+    // 环境光
     Light* ambientLight = LightManager::getInstance()->createAmbientLight(Color(100,100,100));
     
+    // 方向光
     Light* dirLight = LightManager::getInstance()->createDirLight(diffuse, lightDir);
     
+    // 点光源
     Color pointDiffuse(200,0,0);
     Light* pointLight = LightManager::getInstance()->createPointLight(pointDiffuse,lightPosition);
     
+    // end of 创建灯光
+    ////////////////////////////////////////////////////////////
+    
+    
+    ////////////////////////////////////////////////////////////
+    // 创建物体
+    Texture2* texture = TextureCache::getInstance()->addImage("grid.jpg");
+    
+    Mesh ball;
+    load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
+    ball.setMaterialType(Material::TEXTURE);
+    
+    // end of 创建物体
+    ////////////////////////////////////////////////////////////
+    
+    ////////////////////////////////////////////////////////////
+    //  开始游戏循环
+    RenderList renderlist;
     bool quit = false;
     SDL_Event event;
     while (!quit) {
@@ -192,9 +186,15 @@ int main(int argc, const char * argv[])
             ball.reset();
             
             ball.setRotateY(angle_y);
-         //   ball.setRotateX(angle_x);
+            //   ball.setRotateX(angle_x);
             ball.modelToWorld(camera);
             renderlist.insertMesh(&ball);
+            
+            // 插入多边形
+            for (int i = 0; i < kFaceCount; ++i) {
+                renderlist.insertFace(&mFace[i]);
+            }
+            
             
             if (remove_back_face) {
                 renderlist.removeBackface(camera);
@@ -226,7 +226,7 @@ int main(int argc, const char * argv[])
             }else{
                 Text2D::showText("remove backface:false", 0, 120);
             }
-
+            
             swapBuffer();
         };
         

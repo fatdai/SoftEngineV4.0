@@ -50,4 +50,21 @@ void draw_gouraud_triangle(Face* poly);
 void draw_texture_triangle(Face* poly);
 
 
+/////////////////////////////////////////////////////////////////
+// 只支持  固定着色的纹理 和 恒定着色的和纹理
+// 或者直接绘制纹理
+// 暂时不支持 gouraud 着色的纹理
+// 还需要考虑 z缓存  1/z 缓存绘制的时候
+
+void drawTextureFace(Face* face);
+
+void drawFlatTextureFace(Face* face);
+
+void drawConstantTextureFace(Face* face);
+
+
+
+
+
+
 #endif /* defined(__Soft_Engine_V3_0__Render__) */

@@ -21,6 +21,7 @@ public:
     
     enum{
         WIRE,  // 线框
+        CONSTANT, //  固定着色,不考虑光照处理
         FLAT,  // 恒定着色
         GOURAUD, // gouraud 着色
         TEXTURE, // 纹理

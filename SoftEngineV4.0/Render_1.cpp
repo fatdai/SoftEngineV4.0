@@ -2364,3 +2364,8 @@ void draw_gouraud_triangle(Face* face)       // bytes per line, 320, 640 etc.
         } // end if
     
 } // end Draw_Gouraud_Triangle16
+
+
+/////////////////////////////////////////////////////////////////
+
+

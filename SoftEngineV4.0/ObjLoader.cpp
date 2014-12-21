@@ -51,7 +51,7 @@ int load_Obj_Vertex_Tex(Mesh* obj,
              const Vec3& pos,
              bool needNormal
              ){
-    
+        
     char cLine[256];	//A line of the obj file
     vector<float> vertices;
     vector<float> texCoords;
@@ -219,7 +219,6 @@ int load_Obj_Vertex_Tex(Mesh* obj,
         throw new SDException("此obj文件不包含纹理数据............\n");
     }
     
-    SET_BIT(obj->mati.mati_type,Material::TEXTURE);
     obj->mati.texture = texture;
 
     /////////////////////////////////

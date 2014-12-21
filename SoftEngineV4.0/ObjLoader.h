@@ -150,7 +150,7 @@ int load_Obj_Vertex_Tex(Mesh* obj,
                         const string& filename,
                         const Vec3& scale,
                         const Vec3& pos,
-                        bool needNormal = false);
+                        bool needNormal = true);
 
 
 
@@ -166,7 +166,7 @@ int load_Obj_Vertex(Mesh* obj,
                     const string& filename,
                     const Vec3& scale,
                     const Vec3& pos,
-                    bool needNormal = false);
+                    bool needNormal = true);
 
 
 #endif /* defined(__Soft_Engine_V3_0__ObjLoader__) */
