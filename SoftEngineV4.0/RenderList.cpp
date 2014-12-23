@@ -12,6 +12,7 @@
 #include "Color.h"
 #include "Light.h"
 #include "Render_1.h"
+#include "Render_2.h"
 
 RenderList::RenderList(){
     num_faces = 0;
@@ -879,17 +880,27 @@ void RenderList::draw(){
         }
         
         if (cur_face->mati.mati_type == Material::WIRE) {
-            
+
+#if 0
             Uint32 color = cur_face->lit_color[0].toInt_RGB();
             draw_line_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
             draw_line_v1(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
             draw_line_v1(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
+#endif
+            Uint32 color = cur_face->lit_color[0].toInt_RGB();
+            DrawLine(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
+            DrawLine(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
+            DrawLine(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
             
         }else if (cur_face->mati.mati_type == Material::FLAT||
                   cur_face->mati.mati_type == Material::CONSTANT){
             
+#if 0
             Uint32 color = cur_face->lit_color[0].toInt_RGB();
             draw_fill_triangle_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y,cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, color);
+#endif
+            
+            DrawTriangle(cur_face);
             
         }else if (cur_face->mati.mati_type == Material::GOURAUD){
             

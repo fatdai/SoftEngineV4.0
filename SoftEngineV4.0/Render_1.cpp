@@ -2368,4 +2368,5 @@ void draw_gouraud_triangle(Face* face)       // bytes per line, 320, 640 etc.
 
 /////////////////////////////////////////////////////////////////
 
-
+void drawTextureFace(Face* face){
+}

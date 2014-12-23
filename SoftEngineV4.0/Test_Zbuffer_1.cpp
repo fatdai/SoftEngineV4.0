@@ -25,6 +25,7 @@
 #include "FPS.h"
 #include "Text2D.h"
 #include "Light.h"
+#include "Render_2.h"
 
 
 // 渲染文字
@@ -32,32 +33,6 @@ bool wire = false;
 bool remove_back_face = true;
 bool animation = true;
 
-#define kFaceCount 100
-Face mFace[kFaceCount];
-void initPoly(){
-
-    for (int i = 0; i < kFaceCount ; ++i) {
-        mFace[i].state = FACE_STATE_ACTIVITY | FACE_STATE_NEED_CUTDOWN;
-        mFace[i].mati.mati_type = Material::GOURAUD;
-        
-        mFace[i].vlist_trans[0].x = rand()%600 - 300;
-        mFace[i].vlist_trans[0].y = rand()%800 - 400;
-        mFace[i].vlist_trans[0].z = rand()%400 - 200;
-        
-        mFace[i].vlist_trans[1].x = rand()%600 - 300;
-        mFace[i].vlist_trans[1].y = rand()%800 - 400;
-        mFace[i].vlist_trans[1].z = rand()%400 - 200;
-        
-        mFace[i].vlist_trans[2].x = rand()%600 - 300;
-        mFace[i].vlist_trans[2].y = rand()%800 - 400;
-        mFace[i].vlist_trans[2].z = rand()%400 - 200;
-        
-        mFace[i].lit_color[0] = Color(255, 0, 0);
-        mFace[i].lit_color[1] = Color(0, 255, 0);
-        mFace[i].lit_color[2] = Color(0, 0, 255);
-    }
-    
-}
 
 int main(int argc, const char * argv[])
 {
@@ -65,8 +40,6 @@ int main(int argc, const char * argv[])
         printf("init error!\n");
         exit(0);
     }
-    
-    initPoly();
     
     ////////////////////////////////////////////////////////////
     //创建相机
@@ -110,8 +83,9 @@ int main(int argc, const char * argv[])
     Texture2* texture = TextureCache::getInstance()->addImage("grid.jpg");
     
     Mesh ball;
-    load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
-    ball.setMaterialType(Material::TEXTURE);
+   // load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
+    load_Obj_Vertex(&ball, "monkey.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
+    ball.setMaterialType(Material::FLAT);
     
     // end of 创建物体
     ////////////////////////////////////////////////////////////
@@ -190,12 +164,7 @@ int main(int argc, const char * argv[])
             ball.modelToWorld(camera);
             renderlist.insertMesh(&ball);
             
-            // 插入多边形
-            for (int i = 0; i < kFaceCount; ++i) {
-                renderlist.insertFace(&mFace[i]);
-            }
-            
-            
+
             if (remove_back_face) {
                 renderlist.removeBackface(camera);
             }
@@ -226,6 +195,13 @@ int main(int argc, const char * argv[])
             }else{
                 Text2D::showText("remove backface:false", 0, 120);
             }
+            
+            Vec2 v[3] = {
+                {332.5, 83.1},
+                {392.9, 83.2},
+                {464.8, 223.6}
+            };
+            DrawTriangle(v);
             
             swapBuffer();
         };

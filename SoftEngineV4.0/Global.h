@@ -28,6 +28,12 @@ extern SDL_Surface* gText2DSurface;
 const static int kWINDOW_WIDTH = 800;
 const static int kWINDOW_HEIGHT = 600;
 
+//屏幕裁减
+const static int kMIN_CLIP_X = 0;
+const static int kMIN_CLIP_Y = 0;
+const static int kMAX_CLIP_X = kWINDOW_WIDTH-1;
+const static int kMAX_CLIP_Y = kWINDOW_HEIGHT-1;
+
 // 常见颜色
 extern Uint32 gColorRed;
 extern Uint32 gColorGreen;
