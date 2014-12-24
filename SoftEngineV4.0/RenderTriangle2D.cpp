@@ -37,6 +37,19 @@ Uint8 clampColorInUint8(float r){
     return r;
 }
 
+int clampInt(int min,int max,float input){
+    
+    if (input < min) {
+        return min;
+    }
+    
+    if (input > max) {
+        return max;
+    }
+    
+    return (int)input;
+}
+
 #pragma mark 渲染gouraud 2d三角形
 void RenderGouraudTriangle2D(Vec2* pv){
     
@@ -914,18 +927,6 @@ void RenderGouraudTriangle2D(Face* face){
     unsigned char r2 = face->lit_color[v2].r;
     unsigned char g2 = face->lit_color[v2].g;
     unsigned char b2 = face->lit_color[v2].b;
-
-//    unsigned char r0 = 255;
-//    unsigned char g0 = 0;
-//    unsigned char b0 = 0;
-//    
-//    unsigned char r1 = 0;
-//    unsigned char g1 = 255;
-//    unsigned char b1 = 0;
-//    
-//    unsigned char r2 = 0;
-//    unsigned char g2 = 0;
-//    unsigned char b2 = 255;
     
     // 提取顶点,准备进行光栅化
     if (tri_type == TRIANGLE_TYPE::FLAT_TOP_TRIANGLE) {
@@ -980,7 +981,7 @@ void RenderGouraudTriangle2D(Face* face){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY; ++i) {
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
@@ -1001,10 +1002,15 @@ void RenderGouraudTriangle2D(Face* face){
             
             float distx = old_xe - old_xs;
             
-            
-            float drdx = (xer-xsr)/distx;
-            float dgdx = (xeg-xsg)/distx;
-            float dbdx = (xeb-xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -1092,7 +1098,7 @@ void RenderGouraudTriangle2D(Face* face){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY;++i) {
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
@@ -1113,9 +1119,15 @@ void RenderGouraudTriangle2D(Face* face){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -1228,10 +1240,8 @@ void RenderGouraudTriangle2D(Face* face){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY; ++i) {
-            
-            //   assert(old_xs <= old_xe);
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
                 old_xs += dxdy10;
@@ -1251,9 +1261,15 @@ void RenderGouraudTriangle2D(Face* face){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -1319,9 +1335,15 @@ void RenderGouraudTriangle2D(Face* face){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -1430,10 +1452,8 @@ void RenderGouraudTriangle2D(Face* face){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY; ++i) {
-            
-            //  assert(old_xs <= old_xe);
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
                 old_xs += dxdy20;
@@ -1453,9 +1473,15 @@ void RenderGouraudTriangle2D(Face* face){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -1524,9 +1550,15 @@ void RenderGouraudTriangle2D(Face* face){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -2422,3 +2454,726 @@ void RenderTriangle2D(Face* face){
     }
 }
 
+
+//////////////////////////////////////////////////////////
+#pragma mark 渲染 FLAT/CONSTANT 带 纹理的三角形
+void RenderTriangleTexture2D(Face* face){
+
+    // first trivial clipping rejection tests
+    if (((face->vlist_trans[0].y < kMIN_CLIP_Y)  &&
+         (face->vlist_trans[1].y < kMIN_CLIP_Y)  &&
+         (face->vlist_trans[2].y < kMIN_CLIP_Y)) ||
+        
+        ((face->vlist_trans[0].y > kMAX_CLIP_Y)  &&
+         (face->vlist_trans[1].y > kMAX_CLIP_Y)  &&
+         (face->vlist_trans[2].y > kMAX_CLIP_Y)) ||
+        
+        ((face->vlist_trans[0].x < kMIN_CLIP_X)  &&
+         (face->vlist_trans[1].x < kMIN_CLIP_X)  &&
+         (face->vlist_trans[2].x < kMIN_CLIP_X)) ||
+        
+        ((face->vlist_trans[0].x > kMAX_CLIP_X)  &&
+         (face->vlist_trans[1].x > kMAX_CLIP_X)  &&
+         (face->vlist_trans[2].x > kMAX_CLIP_X)))
+    {
+        return;
+    }
+    
+    
+    // degenerate triangle
+    if ( ((face->vlist_trans[0].x==face->vlist_trans[1].x) &&
+          (face->vlist_trans[1].x==face->vlist_trans[2].x)) ||
+        ((face->vlist_trans[0].y==face->vlist_trans[1].y) &&
+         (face->vlist_trans[1].y==face->vlist_trans[2].y)))
+    {
+        return;
+    }
+    
+    // 排列顶点
+    int v0 = 0;
+    int v1 = 1;
+    int v2 = 2;
+    int temp;
+    if (face->vlist_trans[v1].y < face->vlist_trans[v0].y) {
+        temp = v0;
+        v0 = v1;
+        v1 = temp;
+    }
+    
+    if (face->vlist_trans[v2].y < face->vlist_trans[v0].y){
+        temp = v0;
+        v0 = v2;
+        v2 = temp;
+    }
+    
+    if (face->vlist_trans[v2].y < face->vlist_trans[v1].y) {
+        temp = v1;
+        v1 = v2;
+        v2 = temp;
+    }
+    
+    TRIANGLE_TYPE tri_type;
+    
+    // 检测是哪种三角形
+    if (face->vlist_trans[v0].y == face->vlist_trans[v1].y) {
+        // 平顶三角形
+        tri_type = TRIANGLE_TYPE::FLAT_TOP_TRIANGLE;
+        
+        // 从左到右排列顶点
+        if (face->vlist_trans[v1].x < face->vlist_trans[v0].x) {
+            temp = v0;
+            v0 = v1;
+            v1 = temp;
+        }
+    }//end if
+    else{
+        if (face->vlist_trans[v1].y == face->vlist_trans[v2].y) {
+            // 平底三角形
+            tri_type = TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE;
+            
+            //从左到右
+            if (face->vlist_trans[v1].x > face->vlist_trans[v2].x) {
+                temp = v1;
+                v1 = v2;
+                v2 = temp;
+            }
+        }// end if
+        else{
+            // 判断三角形是左边长还是右边长
+            // 插值计算
+            float interx = face->vlist_trans[v0].x + (face->vlist_trans[v1].y - face->vlist_trans[v0].y)*(face->vlist_trans[v2].x - face->vlist_trans[v0].x)/(face->vlist_trans[v2].y - face->vlist_trans[v0].y);
+            if (interx > face->vlist_trans[v1].x) {
+                tri_type = TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE;
+            }else{
+                tri_type = TRIANGLE_TYPE::LEFT_LONG_TRIANGLE;
+            }
+        }// end else
+    }// end else
+    
+    float x0 = face->vlist_trans[v0].x;
+    float y0 = face->vlist_trans[v0].y;
+    
+    float x1 = face->vlist_trans[v1].x;
+    float y1 = face->vlist_trans[v1].y;
+    
+    float x2 = face->vlist_trans[v2].x;
+    float y2 = face->vlist_trans[v2].y;
+    
+    Uint32* dst_buffer = (Uint32*)gSurface->pixels;
+    int mem_pitch = gSurface->pitch >> 2;
+    
+    float r0 = face->vlist_trans[v0].tu;
+    float g0 = face->vlist_trans[v0].tv;
+    
+    float r1 = face->vlist_trans[v1].tu;
+    float g1 = face->vlist_trans[v1].tv;
+    
+    float r2 = face->vlist_trans[v2].tu;
+    float g2 = face->vlist_trans[v2].tv;
+    
+    Uint32* texmap = (Uint32*)face->mati.texture->surface->pixels;
+    int tex_pitch = face->mati.texture->surface->pitch >> 2;
+    
+    int minTexY = 0;
+    int maxTexY = face->mati.texture->h - 1;
+    
+    // 提取顶点,准备进行光栅化
+    if (tri_type == TRIANGLE_TYPE::FLAT_TOP_TRIANGLE) {
+        
+        float dy = y2 - y0;
+        float dxdyl = (x2 - x0)/dy;
+        float dxdyr = (x2 - x1)/dy;
+        
+        // IL
+        float drdyl = (r2 - r0)/dy;
+        float dgdyl = (g2 - g0)/dy;
+        
+        // IR
+        float drdyr = (r2 - r1)/dy;
+        float dgdyr = (g2 - g1)/dy;
+        
+        float xsr = r0;
+        float xsg = g0;
+        
+        float xer = r1;
+        float xeg = g1;
+        
+        // 添加裁减代码
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+            float dy2 = kMIN_CLIP_Y - y0;
+            xsr += drdyl * dy2;
+            xsg += dgdyl * dy2;
+            
+            xer += drdyr * dy2;
+            xeg += dgdyr * dy2;
+        }
+        
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+        
+        int endY = y2;
+        float xs = x0,xe = x1;
+        float old_xs = x0,old_xe = x1;
+        int start = (int)y0 * mem_pitch;
+        
+        // 需要用到的变量
+        float dx,rs,gs;
+        
+        float drdx;
+        float dgdx;
+        for (int i = y0; i < endY; ++i) {
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdyl;
+                old_xe += dxdyr;
+                xs = old_xs;
+                xe = old_xe;
+                
+                xsr += drdyl;
+                xsg += dgdyl;
+                
+                xer += drdyr;
+                xeg += dgdyr;
+                continue;
+            }
+            
+            float distx = old_xe - old_xs;
+
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+            }else{
+                 drdx = (xer-xsr)/distx;
+                 dgdx = (xeg-xsg)/distx;
+            }
+
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            dx = (xs - old_xs);
+            rs = xsr + dx * drdx;
+            gs = xsg + dx * dgdx;
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                rs += drdx;
+                gs += dgdx;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdyl;
+            old_xe += dxdyr;
+            xs = old_xs;
+            xe = old_xe;
+            
+            // 颜色增量
+            xsr += drdyl;
+            xsg += dgdyl;
+            
+            xer += drdyr;
+            xeg += dgdyr;
+        }
+    }else if(tri_type == TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE){
+        
+        float dy = y1 - y0;
+        float dxdyl = (x1-x0)/dy;
+        float dxdyr = (x2-x0)/dy;
+        
+        //IL
+        float drdyl = (r1 - r0)/dy;
+        float dgdyl = (g1 - g0)/dy;
+        
+        //IR
+        float drdyr = (r2 - r0)/dy;
+        float dgdyr = (g2 - g0)/dy;
+        
+        float xsr = r0;
+        float xsg = g0;
+        
+        float xer = r0;
+        float xeg = g0;
+        
+        // 添加裁减代码
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+            float dy2 = kMIN_CLIP_Y - y0;
+            xsr += drdyl * dy2;
+            xsg += dgdyl * dy2;
+            
+            xer += drdyr * dy2;
+            xeg += dgdyr * dy2;
+        }
+        
+        if (y1 > kMAX_CLIP_Y) {
+            y1 = kMAX_CLIP_Y;
+        }
+        
+        float xs = x0,xe = x0;
+        float old_xs = x0,old_xe = x0;
+        int endY = y1;
+        int start = (int)y0 * mem_pitch;
+        
+        // 需要用到的变量
+        float dx,rs,gs;
+        float drdx,dgdx;
+        for (int i = y0; i < endY;++i) {
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdyl;
+                old_xe += dxdyr;
+                xs = old_xs;
+                xe = old_xe;
+                
+                xsr += drdyl;
+                xsg += dgdyl;
+                
+                xer += drdyr;
+                xeg += dgdyr;
+                continue;
+            }
+            
+            float distx = old_xe - old_xs;
+            
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            dx = (xs - old_xs);
+            rs = xsr + dx * drdx;
+            gs = xsg + dx * dgdx;
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                rs += drdx;
+                gs += dgdx;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdyl;
+            old_xe += dxdyr;
+            xs = old_xs;
+            xe = old_xe;
+            
+            // 颜色增量
+            xsr += drdyl;
+            xsg += dgdyl;
+            
+            xer += drdyr;
+            xeg += dgdyr;
+        }
+    }
+    
+    else if (tri_type == TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE){
+        
+        float dy10 = y1 - y0;
+        float dxdy10 = (x1 - x0)/dy10;
+        
+        float dy20 = y2 - y0;
+        float dxdy20 = (x2 - x0)/dy20;
+        
+        float dy21 = y2 - y1;
+        float dxdy21 = (x2 - x1)/dy21;
+        
+        //IL1
+        float drdy10 = (r1 - r0)/dy10;
+        float dgdy10 = (g1 - g0)/dy10;
+        
+        //IR
+        float drdy20 = (r2 - r0)/dy20;
+        float dgdy20 = (g2 - g0)/dy20;
+        
+        //IL2
+        float drdy21 = (r2 - r1)/dy21;
+        float dgdy21 = (g2 - g1)/dy21;
+        
+        float xsr = r0;
+        float xsg = g0;
+        
+        float xer = r0;
+        float xeg = g0;
+        
+        // 裁减
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+            float dy2 = kMIN_CLIP_Y - y0;
+            xsr += drdy10 * dy2;
+            xsg += dgdy10 * dy2;
+            
+            xer += drdy20 * dy2;
+            xeg += dgdy20 * dy2;
+        }
+        
+        // test y1
+        if (y1 < kMIN_CLIP_Y) {
+            y1 = kMIN_CLIP_Y;
+        }
+        
+        if (y1 > kMAX_CLIP_Y) {
+            y1 = kMAX_CLIP_Y;
+        }
+        
+        // test y2
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+        
+        
+        float xs = x0,xe = x0;
+        float old_xs = x0,old_xe = x0;
+        int start = (int)y0 * mem_pitch;
+        
+        //分两段绘制
+        int endY = y1;
+        
+        // 需要用到的变量
+        float dx,rs,gs;
+        float drdx,dgdx;
+        for (int i = y0; i < endY; ++i) {
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy10;
+                old_xe += dxdy20;
+                xs = old_xs;
+                xe = old_xe;
+                
+                xsr += drdy10;
+                xsg += dgdy10;
+                
+                xer += drdy20;
+                xeg += dgdy20;
+                continue;
+            }
+            
+            float distx = old_xe - old_xs;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            dx = (xs - old_xs);
+            rs = xsr + dx * drdx;
+            gs = xsg + dx * dgdx;
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                rs += drdx;
+                gs += dgdx;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy10;
+            old_xe += dxdy20;
+            xs = old_xs;
+            xe = old_xe;
+            
+            //颜色增量
+            xsr += drdy10;
+            xsg += dgdy10;
+            
+            xer += drdy20;
+            xeg += dgdy20;
+        }
+        
+        endY = y2;
+        xs = x1;
+        old_xs = x1;
+        
+        xsr = r1;
+        xsg = g1;
+        
+        for (int i = y1; i < endY; ++i) {
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy21;
+                old_xe += dxdy20;
+                xs = old_xs;
+                xe = old_xe;
+                
+                xsr += drdy21;
+                xsg += dgdy21;
+                
+                xer += drdy20;
+                xeg += dgdy20;
+                continue;
+            }
+            
+            float distx = old_xe - old_xs;
+            
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            
+            dx = (xs - old_xs);
+            rs = xsr + dx * drdx;
+            gs = xsg + dx * dgdx;
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                rs += drdx;
+                gs += dgdx;
+                
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy21;
+            old_xe += dxdy20;
+            xs = old_xs;
+            xe = old_xe;
+            
+            // 颜色增量
+            xsr += drdy21;
+            xsg += dgdy21;
+            
+            xer += drdy20;
+            xeg += dgdy20;
+        }
+    }else if (tri_type == TRIANGLE_TYPE::LEFT_LONG_TRIANGLE){
+        
+        float dy10 = y1 - y0;
+        float dxdy10 = (x1 - x0)/dy10;
+        
+        float dy20 = y2 - y0;
+        float dxdy20 = (x2 - x0)/dy20;
+        
+        float dy21 = y2 - y1;
+        float dxdy21 = (x2 - x1)/dy21;
+        
+        // IL
+        float drdy20 = (r2 - r0)/dy20;
+        float dgdy20 = (g2 - g0)/dy20;
+        
+        //IR1
+        float drdy10 = (r1 - r0)/dy10;
+        float dgdy10 = (g1 - g0)/dy10;
+        
+        //IR2
+        float drdy21 = (r2 - r1)/dy21;
+        float dgdy21 = (g2 - g1)/dy21;
+        
+        float xsr = r0;
+        float xsg = g0;
+        
+        float xer = r0;
+        float xeg = g0;
+        
+        // 裁减
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+            float dy2 = kMIN_CLIP_Y - y0;
+            xsr += drdy20 * dy2;
+            xsg += dgdy20 * dy2;
+            
+            xer += drdy10 * dy2;
+            xeg += dgdy10 * dy2;
+        }
+        
+        // test y1
+        if (y1 < kMIN_CLIP_Y) {
+            y1 = kMIN_CLIP_Y;
+        }
+        
+        if (y1 > kMAX_CLIP_Y) {
+            y1 = kMAX_CLIP_Y;
+        }
+        
+        // test y2
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+        
+        float xs = x0,xe = x0;
+        float old_xs = x0,old_xe = x0;
+        int endY = y1;
+        int start = (int)y0 * mem_pitch;
+        
+        // 需要用到的变量
+        float dx,rs,gs;
+        float drdx;
+        float dgdx;
+        for (int i = y0; i < endY; ++i) {
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy20;
+                old_xe += dxdy10;
+                xs = old_xs;
+                xe = old_xe;
+                
+                xsr += drdy20;
+                xsg += dgdy20;
+                
+                xer += drdy10;
+                xeg += dgdy10;
+                continue;
+            }
+            
+            float distx = old_xe - old_xs;
+            
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+            }
+        
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            dx = (xs - old_xs);
+            rs = xsr + dx * drdx;
+            gs = xsg + dx * dgdx;
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                rs += drdx;
+                gs += dgdx;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy20;
+            old_xe += dxdy10;
+            xs = old_xs;
+            xe = old_xe;
+            
+            //颜色增量
+            xsr += drdy20;
+            xsg += dgdy20;
+            
+            xer += drdy10;
+            xeg += dgdy10;
+        }
+        
+        endY = y2;
+        xe = x1;
+        old_xe = x1;
+        
+        xer = r1;
+        xeg = g1;
+        
+        for (int i = y1;i < endY; ++i) {
+            
+            //   assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy20;
+                old_xe += dxdy21;
+                
+                xs = old_xs;
+                xe = old_xe;
+                
+                xsr += drdy20;
+                xsg += dgdy20;
+                
+                xer += drdy21;
+                xeg += dgdy21;
+                continue;
+            }
+            
+            float distx = old_xe - old_xs;
+            
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            dx = (xs - old_xs);
+            rs = xsr + dx * drdx;
+            gs = xsg + dx * dgdx;
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                rs += drdx;
+                gs += dgdx;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy20;
+            old_xe += dxdy21;
+            xs = old_xs;
+            xe = old_xe;
+            
+            // 颜色增量
+            xsr += drdy20;
+            xsg += dgdy20;
+            
+            xer += drdy21;
+            xeg += dgdy21;
+        }
+    }
+    else{
+        printf("DrawTriangle maybe some error......\n");
+    }
+}

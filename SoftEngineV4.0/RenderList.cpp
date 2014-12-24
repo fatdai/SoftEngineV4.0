@@ -914,7 +914,8 @@ void RenderList::draw(){
             
         }else if (cur_face->mati.mati_type == Material::TEXTURE){
             
-            draw_texture_triangle(cur_face);
+           // draw_texture_triangle(cur_face);
+            RenderTriangleTexture2D(cur_face);
             
         }
         

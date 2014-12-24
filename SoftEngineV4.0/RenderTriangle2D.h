@@ -24,8 +24,14 @@ void RenderGouraudTriangle2D(Vec2* pv);
 
 void RenderGouraudTriangle2D(Face* face);
 
+// 绘制纹理
+void RenderTriangleTexture2D(Face* face);
+
 
 // 将r范围限制到[0-255]
 Uint8 clampColorInUint8(float r);
+
+// 将 input 限制在 [min,max]
+int clampInt(int min,int max,float input);
 
 #endif /* defined(__SoftEngineV4_0__RenderTriangle2D__) */
