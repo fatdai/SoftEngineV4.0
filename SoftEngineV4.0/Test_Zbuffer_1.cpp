@@ -84,9 +84,9 @@ int main(int argc, const char * argv[])
     Texture2* texture = TextureCache::getInstance()->addImage("cube_2.jpg");
     
     Mesh ball;
-    ball.setMaterialType(Material::GOURAUD);
-    //load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
-    load_Obj_Vertex(&ball, "monkey.obj",Vec3(150, 150, 150),Vec3(0, 0,-100));
+    ball.setMaterialType(Material::TEXTURE);
+    load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
+   // load_Obj_Vertex(&ball, "monkey.obj",Vec3(150, 150, 150),Vec3(0, 0,-100));
     
     
     // end of 创建物体

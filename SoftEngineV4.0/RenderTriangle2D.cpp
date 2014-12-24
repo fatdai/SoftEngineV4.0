@@ -221,7 +221,7 @@ void RenderGouraudTriangle2D(Vec2* pv){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY; ++i) {
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
@@ -242,11 +242,16 @@ void RenderGouraudTriangle2D(Vec2* pv){
             
             float distx = old_xe - old_xs;
             
-            
-            float drdx = (xer-xsr)/distx;
-            float dgdx = (xeg-xsg)/distx;
-            float dbdx = (xeb-xsb)/distx;
-            
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                 drdx = (xer-xsr)/distx;
+                 dgdx = (xeg-xsg)/distx;
+                 dbdx = (xeb-xsb)/distx;
+            }
+
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
             }
@@ -333,7 +338,7 @@ void RenderGouraudTriangle2D(Vec2* pv){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY;++i) {
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
@@ -354,9 +359,15 @@ void RenderGouraudTriangle2D(Vec2* pv){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -469,10 +480,8 @@ void RenderGouraudTriangle2D(Vec2* pv){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY; ++i) {
-            
-            //   assert(old_xs <= old_xe);
             
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
                 old_xs += dxdy10;
@@ -492,9 +501,15 @@ void RenderGouraudTriangle2D(Vec2* pv){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -560,9 +575,15 @@ void RenderGouraudTriangle2D(Vec2* pv){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -671,11 +692,8 @@ void RenderGouraudTriangle2D(Vec2* pv){
         
         // 需要用到的变量
         float dx,rs,gs,bs;
-        
+        float drdx,dgdx,dbdx;
         for (int i = y0; i < endY; ++i) {
-            
-            //  assert(old_xs <= old_xe);
-            
             if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
                 old_xs += dxdy20;
                 old_xe += dxdy10;
@@ -694,9 +712,15 @@ void RenderGouraudTriangle2D(Vec2* pv){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;
@@ -765,9 +789,15 @@ void RenderGouraudTriangle2D(Vec2* pv){
             
             float distx = old_xe - old_xs;
             
-            float drdx = (xer - xsr)/distx;
-            float dgdx = (xeg - xsg)/distx;
-            float dbdx = (xeb - xsb)/distx;
+            if (distx == 0) {
+                drdx = 0.0f;
+                dgdx = 0.0f;
+                dbdx = 0.0f;
+            }else{
+                drdx = (xer-xsr)/distx;
+                dgdx = (xeg-xsg)/distx;
+                dbdx = (xeb-xsb)/distx;
+            }
             
             if (old_xs < kMIN_CLIP_X) {
                 xs = kMIN_CLIP_X;

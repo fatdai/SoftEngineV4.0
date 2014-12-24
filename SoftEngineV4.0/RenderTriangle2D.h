@@ -17,16 +17,17 @@
 // render 2d 三角形
 void RenderTriangle2D(Vec2* pv);
 
+
 void RenderTriangle2D(Face* face);
 
 // 2d gouraud
 void RenderGouraudTriangle2D(Vec2* pv);
 
+// gouraud shader 三角形
 void RenderGouraudTriangle2D(Face* face);
 
-// 绘制纹理
+// 绘制纹理,不包含 constant/flat shader
 void RenderTriangleTexture2D(Face* face);
-
 
 // 将r范围限制到[0-255]
 Uint8 clampColorInUint8(float r);
