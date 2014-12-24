@@ -11,6 +11,8 @@
 		CE52DF7B1A46F84A0051DB4E /* Test_Zbuffer_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */; };
 		CE52DF7E1A46FB4C0051DB4E /* ZBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF7C1A46FB4C0051DB4E /* ZBuffer.cpp */; };
 		CE5CFF4E1A45056E0060F4C3 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE5CFF4C1A45056E0060F4C3 /* Light.cpp */; };
+		CE6901D51A4AA0AC00F1ECF1 /* RenderLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE6901D31A4AA0AC00F1ECF1 /* RenderLine.cpp */; };
+		CE6901D81A4AA16C00F1ECF1 /* RenderTriangle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE6901D61A4AA16C00F1ECF1 /* RenderTriangle2D.cpp */; };
 		CE83BA861A4460AF00C5A0BC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE83BA851A4460AF00C5A0BC /* main.cpp */; };
 		CE83BA881A4460AF00C5A0BC /* SoftEngineV4_0.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE83BA871A4460AF00C5A0BC /* SoftEngineV4_0.1 */; };
 		CE83BA9B1A44611200C5A0BC /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE83BA8F1A44611200C5A0BC /* Face.cpp */; };
@@ -30,6 +32,7 @@
 		CE83BAC51A44613500C5A0BC /* Vec4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE83BAB91A44613500C5A0BC /* Vec4.cpp */; };
 		CE83BAC81A4468BE00C5A0BC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE83BAC61A4468BE00C5A0BC /* Camera.cpp */; };
 		CE8E47E51A49ABC100E63B03 /* Render_2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8E47E31A49ABC100E63B03 /* Render_2.cpp */; };
+		CEB80C7C1A4AA72300D9E049 /* RenderTriangle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEB80C7A1A4AA72300D9E049 /* RenderTriangle3D.cpp */; };
 		CEFF10461A451317001DBE6F /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10441A451317001DBE6F /* Global.cpp */; };
 		CEFF104B1A4515E7001DBE6F /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF10481A4515E7001DBE6F /* SDL2_image.framework */; };
 		CEFF104C1A4515E7001DBE6F /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF10491A4515E7001DBE6F /* SDL2_ttf.framework */; };
@@ -74,6 +77,10 @@
 		CE52DF7D1A46FB4C0051DB4E /* ZBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBuffer.h; sourceTree = "<group>"; };
 		CE5CFF4C1A45056E0060F4C3 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
 		CE5CFF4D1A45056E0060F4C3 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
+		CE6901D31A4AA0AC00F1ECF1 /* RenderLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderLine.cpp; sourceTree = "<group>"; };
+		CE6901D41A4AA0AC00F1ECF1 /* RenderLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderLine.h; sourceTree = "<group>"; };
+		CE6901D61A4AA16C00F1ECF1 /* RenderTriangle2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderTriangle2D.cpp; sourceTree = "<group>"; };
+		CE6901D71A4AA16C00F1ECF1 /* RenderTriangle2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTriangle2D.h; sourceTree = "<group>"; };
 		CE83BA821A4460AF00C5A0BC /* SoftEngineV4.0 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SoftEngineV4.0; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE83BA851A4460AF00C5A0BC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CE83BA871A4460AF00C5A0BC /* SoftEngineV4_0.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SoftEngineV4_0.1; sourceTree = "<group>"; };
@@ -120,6 +127,8 @@
 		CE83BAC71A4468BE00C5A0BC /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		CE8E47E31A49ABC100E63B03 /* Render_2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render_2.cpp; sourceTree = "<group>"; };
 		CE8E47E41A49ABC100E63B03 /* Render_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Render_2.h; sourceTree = "<group>"; };
+		CEB80C7A1A4AA72300D9E049 /* RenderTriangle3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderTriangle3D.cpp; sourceTree = "<group>"; };
+		CEB80C7B1A4AA72300D9E049 /* RenderTriangle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTriangle3D.h; sourceTree = "<group>"; };
 		CEFF10441A451317001DBE6F /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Global.cpp; sourceTree = "<group>"; };
 		CEFF10451A451317001DBE6F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		CEFF10481A4515E7001DBE6F /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_image.framework; sourceTree = "<group>"; };
@@ -173,6 +182,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE6901D21A4AA09200F1ECF1 /* render */ = {
+			isa = PBXGroup;
+			children = (
+				CEFF10511A45602D001DBE6F /* Render_1.cpp */,
+				CEFF10521A45602D001DBE6F /* Render_1.h */,
+				CE8E47E31A49ABC100E63B03 /* Render_2.cpp */,
+				CE8E47E41A49ABC100E63B03 /* Render_2.h */,
+				CE6901D31A4AA0AC00F1ECF1 /* RenderLine.cpp */,
+				CE6901D41A4AA0AC00F1ECF1 /* RenderLine.h */,
+				CE6901D61A4AA16C00F1ECF1 /* RenderTriangle2D.cpp */,
+				CE6901D71A4AA16C00F1ECF1 /* RenderTriangle2D.h */,
+				CEB80C7A1A4AA72300D9E049 /* RenderTriangle3D.cpp */,
+				CEB80C7B1A4AA72300D9E049 /* RenderTriangle3D.h */,
+			);
+			name = render;
+			sourceTree = "<group>";
+		};
 		CE83BA791A4460AF00C5A0BC = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +222,7 @@
 		CE83BA841A4460AF00C5A0BC /* SoftEngineV4.0 */ = {
 			isa = PBXGroup;
 			children = (
+				CE6901D21A4AA09200F1ECF1 /* render */,
 				CEFF10821A45A8F8001DBE6F /* ui */,
 				CEFF10731A457D9B001DBE6F /* model */,
 				CEFF106C1A456E77001DBE6F /* node */,
@@ -213,8 +240,6 @@
 		CE83BA8E1A4460C500C5A0BC /* data */ = {
 			isa = PBXGroup;
 			children = (
-				CEFF10511A45602D001DBE6F /* Render_1.cpp */,
-				CEFF10521A45602D001DBE6F /* Render_1.h */,
 				CEFF10541A456174001DBE6F /* Texture2.cpp */,
 				CEFF10551A456174001DBE6F /* Texture2.h */,
 				CEFF10561A456174001DBE6F /* TextureCache.cpp */,
@@ -241,8 +266,6 @@
 				CEFF10711A456EB7001DBE6F /* MeshCache.h */,
 				CE52DF7C1A46FB4C0051DB4E /* ZBuffer.cpp */,
 				CE52DF7D1A46FB4C0051DB4E /* ZBuffer.h */,
-				CE8E47E31A49ABC100E63B03 /* Render_2.cpp */,
-				CE8E47E41A49ABC100E63B03 /* Render_2.h */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -421,6 +444,7 @@
 				CE83BA861A4460AF00C5A0BC /* main.cpp in Sources */,
 				CEFF10581A456174001DBE6F /* Texture2.cpp in Sources */,
 				CEFF10461A451317001DBE6F /* Global.cpp in Sources */,
+				CEB80C7C1A4AA72300D9E049 /* RenderTriangle3D.cpp in Sources */,
 				CE83BA9F1A44611200C5A0BC /* RenderList.cpp in Sources */,
 				CE83BAC41A44613500C5A0BC /* Vec3.cpp in Sources */,
 				CE52DF781A46EA120051DB4E /* Test_Texture_1.cpp in Sources */,
@@ -430,6 +454,7 @@
 				CE83BAC51A44613500C5A0BC /* Vec4.cpp in Sources */,
 				CEFF10761A457DAB001DBE6F /* ObjLoader.cpp in Sources */,
 				CEFF10651A4563E7001DBE6F /* FileUtil.cpp in Sources */,
+				CE6901D51A4AA0AC00F1ECF1 /* RenderLine.cpp in Sources */,
 				CE83BAC81A4468BE00C5A0BC /* Camera.cpp in Sources */,
 				CE83BAC01A44613500C5A0BC /* MathUtil.cpp in Sources */,
 				CE83BA9C1A44611200C5A0BC /* FaceIndex.cpp in Sources */,
@@ -440,6 +465,7 @@
 				CEFF106F1A456E89001DBE6F /* Sprite.cpp in Sources */,
 				CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */,
 				CE83BABF1A44613500C5A0BC /* Mat4.cpp in Sources */,
+				CE6901D81A4AA16C00F1ECF1 /* RenderTriangle2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

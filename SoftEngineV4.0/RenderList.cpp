@@ -13,6 +13,8 @@
 #include "Light.h"
 #include "Render_1.h"
 #include "Render_2.h"
+#include "RenderLine.h"
+#include "RenderTriangle2D.h"
 
 RenderList::RenderList(){
     num_faces = 0;
@@ -492,7 +494,7 @@ void RenderList::light(Camera* camera){
         }
         
         // start flat  shader
-        if (cur_face->mati.mati_type & Material::FLAT) {
+        if (cur_face->mati.mati_type == Material::FLAT) {
             
             int r_sum = 0;
             int g_sum = 0;
@@ -603,7 +605,7 @@ void RenderList::light(Camera* camera){
             }
             
         }// end of flat shader
-        else if (cur_face->mati.mati_type & Material::GOURAUD){
+        else if (cur_face->mati.mati_type == Material::GOURAUD){
             
             int r_sum0  = 0;
             int g_sum0  = 0;
@@ -888,9 +890,9 @@ void RenderList::draw(){
             draw_line_v1(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
 #endif
             Uint32 color = cur_face->lit_color[0].toInt_RGB();
-            DrawLine(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
-            DrawLine(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
-            DrawLine(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
+            RenderLine(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
+            RenderLine(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
+            RenderLine(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
             
         }else if (cur_face->mati.mati_type == Material::FLAT||
                   cur_face->mati.mati_type == Material::CONSTANT){
@@ -900,11 +902,15 @@ void RenderList::draw(){
             draw_fill_triangle_v1(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y,cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, color);
 #endif
             
-            DrawTriangle(cur_face);
+          //  DrawTriangle(cur_face);
+            
+            RenderTriangle2D(cur_face);
             
         }else if (cur_face->mati.mati_type == Material::GOURAUD){
             
-            draw_gouraud_triangle(cur_face);
+         //   draw_gouraud_triangle(cur_face);
+            
+            RenderGouraudTriangle2D(cur_face);
             
         }else if (cur_face->mati.mati_type == Material::TEXTURE){
             

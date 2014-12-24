@@ -7,6 +7,7 @@
 //
 
 #include "Render_2.h"
+#include <assert.h>
 
 
 enum class TRIANGLE_TYPE{
@@ -16,9 +17,6 @@ enum class TRIANGLE_TYPE{
     
     // 平底
     FLAT_BOTTOM_TRIANGLE,
-    
-    // 一般的三角形
-    GENERAL_TRIANGLE,
     
     // 左边长
     LEFT_LONG_TRIANGLE,
@@ -387,108 +385,11 @@ void DrawLine(int x0,int y0,int x1,int y1,Uint32 color){
     }
 }
 
-//void DrawLine(float x0,float y0,float x1,float y1,Uint32 color){
-//    
-//    // 基于左上填充规则
-//    int xs = (int)(x0 + 0.5);
-//    int ys = (int)(y0 + 0.5);
-//    int xe = (int)(x1);
-//    int ye = (int)(y1);
-//    
-//    if (ClipLine(xs, ys, xe, ye) == 0) {
-//        return;
-//    }
-//    
-//    int pitchWidth = gSurface->pitch >> 2;
-//    
-//    int dx = xe - xs;
-//    int dy = ye - ys;
-//    
-//    // test x
-//    int x_inc;
-//    if (dx >= 0) {
-//        x_inc = 1;
-//    }else{
-//        x_inc = -1;
-//        dx = -dx;
-//    }
-//    
-//    // test y
-//    int y_inc;
-//    if (dy >= 0) {
-//        y_inc = pitchWidth;
-//    }else{
-//        y_inc = -pitchWidth;
-//        dy = -dy;
-//    }
-//    
-//    // compute (dx,dy) * 2
-//    int dx2 = dx << 1;
-//    int dy2 = dy << 1;
-//    
-//    // pre-compute first pixel address in video buffer based on 32bit data
-//    Uint32* vb_start = (Uint32 *)gSurface->pixels + xs + ys * pitchWidth;
-//    
-//    int error;
-//    
-//    // now based on which delta is greater we can draw the line
-//    if (dx > dy) {
-//        
-//        // initialize error term
-//        error = dy2 - dx;
-//        
-//        for (int index = 0; index <= dx; ++index) {
-//            // set pixel
-//            *vb_start = color;
-//            
-//            //test if error has overflowed
-//            if (error >= 0) {
-//                error-=dx2;
-//                
-//                //move to next line
-//                vb_start += y_inc;
-//            }
-//            
-//            // adjust the error term
-//            error += dy2;
-//            
-//            vb_start += x_inc;
-//        } // end for
-//    }else{
-//        // initialize error term
-//        error = dx2 - dy;
-//        
-//        // draw the line
-//        for (int index=0; index <= dy; index++)
-//        {
-//            // set the pixel
-//            *vb_start = color;
-//            
-//            // test if error overflowed
-//            if (error >= 0)
-//            {
-//                error-=dy2;
-//                
-//                // move to next line
-//                vb_start+=x_inc;
-//                
-//            } // end if error overflowed
-//            
-//            // adjust the error term
-//            error+=dx2;
-//            
-//            // move to the next pixel
-//            vb_start+=y_inc;
-//            
-//        } // end for
-//    }
-//}
 
 void DrawTriangle(Face* face){
     
-    Uint32 color = (Uint32)face->lit_color[0].toInt_RGB();
+    Uint32 color = face->lit_color[0].toInt_RGB();
     
-    // 先进行裁减
     // first trivial clipping rejection tests
     if (((face->vlist_trans[0].y < kMIN_CLIP_Y)  &&
          (face->vlist_trans[1].y < kMIN_CLIP_Y)  &&
@@ -508,7 +409,8 @@ void DrawTriangle(Face* face){
     {
         return;
     }
-
+    
+    
     // degenerate triangle
     if ( ((face->vlist_trans[0].x==face->vlist_trans[1].x) &&
           (face->vlist_trans[1].x==face->vlist_trans[2].x)) ||
@@ -523,6 +425,8 @@ void DrawTriangle(Face* face){
     int v1 = 1;
     int v2 = 2;
     int temp;
+    
+    // 注意,这里不能换成 int 类型去比较
     if (face->vlist_trans[v1].y < face->vlist_trans[v0].y) {
         temp = v0;
         v0 = v1;
@@ -534,7 +438,7 @@ void DrawTriangle(Face* face){
         v0 = v2;
         v2 = temp;
     }
-
+    
     if (face->vlist_trans[v2].y < face->vlist_trans[v1].y) {
         temp = v1;
         v1 = v2;
@@ -561,17 +465,17 @@ void DrawTriangle(Face* face){
             tri_type = TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE;
             
             //从左到右
-            if (face->vlist_trans[v1].x < face->vlist_trans[v0].x) {
-                temp = v0;
-                v0 = v1;
-                v1 = temp;
+            if (face->vlist_trans[v2].x < face->vlist_trans[v1].x) {
+                temp = v1;
+                v1 = v2;
+                v2 = temp;
             }
         }// end if
         else{
-           // 判断三角形是左边长还是右边长
+            // 判断三角形是左边长还是右边长
             // 判断三角形是左边长还是右边长
             // 插值计算
-            float interx = (face->vlist_trans[v1].y - face->vlist_trans[v0].y)*(face->vlist_trans[v2].x - face->vlist_trans[v0].x)/(face->vlist_trans[v2].y - face->vlist_trans[v0].y);
+            float interx = face->vlist_trans[v0].x + (face->vlist_trans[v1].y - face->vlist_trans[v0].y)*(face->vlist_trans[v2].x - face->vlist_trans[v0].x)/(face->vlist_trans[v2].y - face->vlist_trans[v0].y);
             if (interx > face->vlist_trans[v1].x) {
                 tri_type = TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE;
             }else{
@@ -579,7 +483,6 @@ void DrawTriangle(Face* face){
             }
         }// end else
     }// end else
-    
     float x0 = face->vlist_trans[v0].x;
     float y0 = face->vlist_trans[v0].y;
     
@@ -589,6 +492,7 @@ void DrawTriangle(Face* face){
     float x2 = face->vlist_trans[v2].x;
     float y2 = face->vlist_trans[v2].y;
     
+
     // 提取顶点,准备进行光栅化
     if (tri_type == TRIANGLE_TYPE::FLAT_TOP_TRIANGLE) {
         // 直接绘制
@@ -600,6 +504,276 @@ void DrawTriangle(Face* face){
         int endY = y2;
         for (int i = y0; i < endY; ++i) {
             DrawLine(xs,i,xe,i,color);
+            xs += dxdyl;
+            xe += dxdyr;
+        }
+    }else if(tri_type == TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE){
+        float xs = x0,xe = x0;
+        float dy = y1 - y0;
+        float dxdyl = (x1-x0)/dy;
+        float dxdyr = (x2-x0)/dy;
+        
+        int endY = y1;
+        for (int i = y0; i < endY;++i) {
+            DrawLine(xs,i,xe,i,color);
+            xs += dxdyl;
+            xe += dxdyr;
+        }
+    }
+    else if (tri_type == TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE){
+        
+        float dy10 = y1 - y0;
+        float dxdy10 = (x1 - x0)/dy10;
+        
+        float dy20 = y2 - y0;
+        float dxdy20 = (x2 - x0)/dy20;
+        
+        float dy21 = y2 - y1;
+        float dxdy21 = (x2 - x1)/dy21;
+        
+        float xs = x0,xe = x0;
+        
+        //分两段绘制
+        int endY = y1;
+        for (int i = y0; i < endY; ++i) {
+            DrawLine(xs,i,xe,i,color);
+            xs += dxdy10;
+            xe += dxdy20;
+        }
+        
+        endY = y2;
+        xs = x1;
+        for (int i = y1; i < endY; ++i) {
+            DrawLine(xs,i,xe,i,color);
+            xs += dxdy21;
+            xe += dxdy20;
+        }
+    }else if (tri_type == TRIANGLE_TYPE::LEFT_LONG_TRIANGLE){
+        
+        float dy10 = y1 - y0;
+        float dxdy10 = (x1 - x0)/dy10;
+        
+        float dy20 = y2 - y0;
+        float dxdy20 = (x2 - x0)/dy20;
+        
+        float dy21 = y2 - y1;
+        float dxdy21 = (x2 - x1)/dy21;
+        
+        float xs = x0,xe = x0;
+        int endY = y1;
+        for (int i = y0; i < endY; ++i) {
+            DrawLine(xs, i, xe, i, color);
+            xs += dxdy20;
+            xe += dxdy10;
+        }
+        
+        endY = y2;
+        xe = x1;
+        for (int i = y1;i < endY; ++i) {
+            DrawLine(xs,i,xe,i,color);
+            xs += dxdy20;
+            xe += dxdy21;
+        }
+    }
+    
+    else{
+        printf("DrawTriangle maybe some error......\n");
+    }
+}
+
+void DrawGouraudTriangle(Face* face){
+    
+    Uint32 color = face->lit_color[0].toInt_RGB();
+    
+    // first trivial clipping rejection tests
+    if (((face->vlist_trans[0].y < kMIN_CLIP_Y)  &&
+         (face->vlist_trans[1].y < kMIN_CLIP_Y)  &&
+         (face->vlist_trans[2].y < kMIN_CLIP_Y)) ||
+        
+        ((face->vlist_trans[0].y > kMAX_CLIP_Y)  &&
+         (face->vlist_trans[1].y > kMAX_CLIP_Y)  &&
+         (face->vlist_trans[2].y > kMAX_CLIP_Y)) ||
+        
+        ((face->vlist_trans[0].x < kMIN_CLIP_X)  &&
+         (face->vlist_trans[1].x < kMIN_CLIP_X)  &&
+         (face->vlist_trans[2].x < kMIN_CLIP_X)) ||
+        
+        ((face->vlist_trans[0].x > kMAX_CLIP_X)  &&
+         (face->vlist_trans[1].x > kMAX_CLIP_X)  &&
+         (face->vlist_trans[2].x > kMAX_CLIP_X)))
+    {
+        return;
+    }
+    
+    
+    // degenerate triangle
+    if ( ((face->vlist_trans[0].x==face->vlist_trans[1].x) &&
+          (face->vlist_trans[1].x==face->vlist_trans[2].x)) ||
+        ((face->vlist_trans[0].y==face->vlist_trans[1].y) &&
+         (face->vlist_trans[1].y==face->vlist_trans[2].y)))
+    {
+        return;
+    }
+    
+    // 排列顶点
+    int v0 = 0;
+    int v1 = 1;
+    int v2 = 2;
+    int temp;
+    
+    // 注意,这里不能换成 int 类型去比较
+    if (face->vlist_trans[v1].y < face->vlist_trans[v0].y) {
+        temp = v0;
+        v0 = v1;
+        v1 = temp;
+    }
+    
+    if (face->vlist_trans[v2].y < face->vlist_trans[v0].y){
+        temp = v0;
+        v0 = v2;
+        v2 = temp;
+    }
+    
+    if (face->vlist_trans[v2].y < face->vlist_trans[v1].y) {
+        temp = v1;
+        v1 = v2;
+        v2 = temp;
+    }
+    
+    TRIANGLE_TYPE tri_type;
+    
+    // 检测是哪种三角形
+    if (face->vlist_trans[v0].y == face->vlist_trans[v1].y) {
+        // 平顶三角形
+        tri_type = TRIANGLE_TYPE::FLAT_TOP_TRIANGLE;
+        
+        // 从左到右排列顶点
+        if (face->vlist_trans[v1].x < face->vlist_trans[v0].x) {
+            temp = v0;
+            v0 = v1;
+            v1 = temp;
+        }
+    }//end if
+    else{
+        if (face->vlist_trans[v1].y == face->vlist_trans[v2].y) {
+            // 平底三角形
+            tri_type = TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE;
+            
+            //从左到右
+            if (face->vlist_trans[v2].x < face->vlist_trans[v1].x) {
+                temp = v1;
+                v1 = v2;
+                v2 = temp;
+            }
+        }// end if
+        else{
+            // 判断三角形是左边长还是右边长
+            // 判断三角形是左边长还是右边长
+            // 插值计算
+            float interx = (face->vlist_trans[v1].y - face->vlist_trans[v0].y)*(face->vlist_trans[v2].x - face->vlist_trans[v0].x)/(face->vlist_trans[v2].y - face->vlist_trans[v0].y);
+            if (interx > face->vlist_trans[v1].x) {
+                tri_type = TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE;
+            }else{
+                tri_type = TRIANGLE_TYPE::LEFT_LONG_TRIANGLE;
+            }
+        }// end else
+    }// end else
+    
+    
+    float x0 = face->vlist_trans[v0].x;
+    float y0 = face->vlist_trans[v0].y;
+    unsigned char x0_r = face->lit_color[0].r;
+    unsigned char x0_g = face->lit_color[0].g;
+    unsigned char x0_b = face->lit_color[0].b;
+    
+    float x1 = face->vlist_trans[v1].x;
+    float y1 = face->vlist_trans[v1].y;
+    unsigned char x1_r = face->lit_color[1].r;
+    unsigned char x1_g = face->lit_color[1].g;
+    unsigned char x1_b = face->lit_color[1].b;
+    
+    float x2 = face->vlist_trans[v2].x;
+    float y2 = face->vlist_trans[v2].y;
+    unsigned char x2_r = face->lit_color[1].r;
+    unsigned char x2_g = face->lit_color[1].g;
+    unsigned char x2_b = face->lit_color[1].b;
+    
+    // 提取顶点,准备进行光栅化
+    if (tri_type == TRIANGLE_TYPE::FLAT_TOP_TRIANGLE) {
+        
+        // 直接绘制
+        float dy = y2 - y0;
+        
+        float dxdyl = (x2 - x0)/dy;
+        float dxrdyl = (x2_r - x0_r)/dy;
+        float dxgdyl = (x2_g - x0_g)/dy;
+        float dxbdyl = (x2_b - x0_b)/dy;
+        
+        float dxdyr = (x2 - x1)/dy;
+        float dxrdyr = (x2_r - x1_r)/dy;
+        float dxgdyr = (x2_g - x1_g)/dy;
+        float dxbdyr = (x2_b - x1_b)/dy;
+        
+        float xl = x0,yl = y0;
+        float r_l = x0_r,g_l = x0_g,b_l = x0_b;
+        float r_r = x1_r,g_r = x1_g,b_r = x1_b;
+        
+        // test rejection
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+           
+            y0 = kMIN_CLIP_Y;
+            
+//            dy = kMIN_CLIP_Y - y0;
+//            
+//            // 计算新的  xl yl
+//            xl = dxdyl * dy  + x0;
+//            r_l = dxrdyl * dy + x0_r;
+//            g_l = dxgdyl * dy + x0_g;
+//            b_l = dxbdyl * dy + x0_b;
+        }
+        
+        // test y2
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+        
+        // 开始循环
+        int endY = y2;
+        Uint32* dst_buffer = (Uint32 *)gSurface->pixels;
+        int mem_pitch = gSurface->pitch >> 2;
+        
+        int xs = x0,xe = x1;
+        int start_buf = 0;
+        for (int i = y0; i < endY; ++i) {
+            
+            assert(xs <= xe);
+            
+            // test xs
+            if (xs > kMAX_CLIP_X) {
+                xs += dxdyl;
+                xe += dxdyr;
+                continue;
+            }
+            
+            if (xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            // test xe
+            if (xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            start_buf = i * mem_pitch + xs;
+            int column = xe - xs;
+            for (int j = 0; j <= column; ++j) {
+                dst_buffer[start_buf + j] = color;
+            }
+
             xs += dxdyl;
             xe += dxdyr;
         }
@@ -678,10 +852,21 @@ void DrawTriangle(Face* face){
 }
 
 
+#ifdef _DEBUG_RASTER_
 
-void DrawTriangle(Vec2* pv){
+
+#pragma mark 测试绘制 gouraud 三角形
+
+void DrawGouraudTriangle(Vec2* pv){
     
-    Uint32 color = gColorGreen;
+    Uint32 color = gColorRed;
+    
+    int ix0 = (int)pv[0].x;
+    int iy0 = (int)pv[0].y;
+    int ix1 = (int)pv[1].x;
+    int iy1 = (int)pv[1].y;
+    int ix2 = (int)pv[2].x;
+    int iy2 = (int)pv[2].y;
     
     // first trivial clipping rejection tests
     if (((pv[0].y < kMIN_CLIP_Y)  &&
@@ -703,10 +888,12 @@ void DrawTriangle(Vec2* pv){
         return;
     }
     
+    
     // degenerate triangle
-    if ( ((pv[0].x==pv[1].x) && (pv[1].x==pv[2].x)) ||
-        ((pv[0].y==pv[1].y) &&
-         (pv[1].y==pv[2].y)))
+    if ( ((ix0==ix1) &&
+          (ix1==ix2)) ||
+        ((iy0==iy1) &&
+         (iy1==iy2)))
     {
         return;
     }
@@ -716,19 +903,19 @@ void DrawTriangle(Vec2* pv){
     int v1 = 1;
     int v2 = 2;
     int temp;
-    if (pv[1].y < pv[0].y) {
+    if (iy1 < iy0) {
         temp = v0;
         v0 = v1;
         v1 = temp;
     }
     
-    if (pv[2].y < pv[0].y){
+    if (iy2 < iy0){
         temp = v0;
         v0 = v2;
         v2 = temp;
     }
     
-    if (pv[2].y < pv[1].y) {
+    if (iy2 < iy1) {
         temp = v1;
         v1 = v2;
         v2 = temp;
@@ -737,33 +924,468 @@ void DrawTriangle(Vec2* pv){
     TRIANGLE_TYPE tri_type;
     
     // 检测是哪种三角形
-    if (pv[v0].y == pv[v1].y) {
+    if ((int)pv[v0].y == (int)pv[v1].y) {
         // 平顶三角形
         tri_type = TRIANGLE_TYPE::FLAT_TOP_TRIANGLE;
         
         // 从左到右排列顶点
-        if (pv[v1].x < pv[v0].x) {
+        if (ix1 < ix0) {
             temp = v0;
             v0 = v1;
             v1 = temp;
         }
     }//end if
     else{
-        if (pv[v1].y == pv[v2].y) {
+        if ((int)pv[v1].y == (int)pv[v2].y) {
             // 平底三角形
             tri_type = TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE;
             
             //从左到右
-            if (pv[v1].x < pv[v0].x) {
-                temp = v0;
-                v0 = v1;
-                v1 = temp;
+            if (ix1 < ix2) {
+                temp = v1;
+                v1 = v2;
+                v2 = temp;
             }
         }// end if
         else{
             // 判断三角形是左边长还是右边长
             // 插值计算
-            float interx = (pv[v1].y - pv[v0].y)*(pv[v2].x - pv[v0].x)/(pv[v2].y - pv[v0].y);
+            float interx = pv[v0].x + (pv[v1].y - pv[v0].y)*(pv[v2].x - pv[v0].x)/(pv[v2].y - pv[v0].y);
+            if (interx > pv[v1].x) {
+                tri_type = TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE;
+            }else{
+                tri_type = TRIANGLE_TYPE::LEFT_LONG_TRIANGLE;
+            }
+        }// end else
+    }// end else
+    
+    float x0 = pv[v0].x;
+    float y0 = pv[v0].y;
+    
+    float x1 = pv[v1].x;
+    float y1 = pv[v1].y;
+    
+    float x2 = pv[v2].x;
+    float y2 = pv[v2].y;
+    
+    
+    Uint32* dst_buffer = (Uint32*)gSurface->pixels;
+    int mem_pitch = gSurface->pitch >> 2;
+    
+    // 提取顶点,准备进行光栅化
+    if (tri_type == TRIANGLE_TYPE::FLAT_TOP_TRIANGLE) {
+
+        float dy = y2 - y0;
+        float dxdyl = (x2 - x0)/dy;
+        float dxdyr = (x2 - x1)/dy;
+        
+        // 添加裁减代码
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+        }
+        
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+        
+        int endY = y2;
+        float xs = x0,xe = x1;
+        float old_xs = x0,old_xe = x1;
+        int start = (int)y0 * mem_pitch;
+        for (int i = y0; i < endY; ++i) {
+            
+            assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdyl;
+                old_xe += dxdyr;
+                xs = old_xs;
+                xe = old_xe;
+                continue;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = color;
+            }
+            start += mem_pitch;
+        
+            old_xs += dxdyl;
+            old_xe += dxdyr;
+            xs = old_xs;
+            xe = old_xe;
+            
+        }
+    }else if(tri_type == TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE){
+        
+        
+        float dy = y1 - y0;
+        float dxdyl = (x1-x0)/dy;
+        float dxdyr = (x2-x0)/dy;
+        
+        // 添加裁减代码
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+        }
+        
+        if (y1 > kMAX_CLIP_Y) {
+            y1 = kMAX_CLIP_Y;
+        }
+        
+        float xs = x0,xe = x0;
+        float old_xs = x0,old_xe = x0;
+        int endY = y1;
+        int start = (int)y0 * mem_pitch;
+        for (int i = y0; i < endY;++i) {
+            
+            assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdyl;
+                old_xe += dxdyr;
+                xs = old_xs;
+                xe = old_xe;
+                continue;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = color;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdyl;
+            old_xe += dxdyr;
+            xs = old_xs;
+            xe = old_xe;
+        }
+    }
+    
+    else if (tri_type == TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE){
+        
+        float dy10 = y1 - y0;
+        float dxdy10 = (x1 - x0)/dy10;
+        
+        float dy20 = y2 - y0;
+        float dxdy20 = (x2 - x0)/dy20;
+        
+        float dy21 = y2 - y1;
+        float dxdy21 = (x2 - x1)/dy21;
+        
+        // 裁减
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+        }
+        
+        // test y1
+        if (y1 < kMIN_CLIP_Y) {
+            y1 = kMIN_CLIP_Y;
+        }
+        
+        if (y1 > kMAX_CLIP_Y) {
+            y1 = kMAX_CLIP_Y;
+        }
+        
+        // test y2
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+        
+
+        float xs = x0,xe = x0;
+        float old_xs = x0,old_xe = x0;
+        int start = (int)y0 * mem_pitch;
+        
+        //分两段绘制
+        int endY = y1;
+        for (int i = y0; i < endY; ++i) {
+            
+         //   assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy10;
+                old_xe += dxdy20;
+                xs = old_xs;
+                xe = old_xe;
+                continue;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = color;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy10;
+            old_xe += dxdy20;
+            xs = old_xs;
+            xe = old_xe;
+        }
+        
+        endY = y2;
+        xs = x1;
+        old_xs = x1;
+        for (int i = y1; i < endY; ++i) {
+            
+          //  assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy21;
+                old_xe += dxdy20;
+                xs = old_xs;
+                xe = old_xe;
+                continue;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = color;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy21;
+            old_xe += dxdy20;
+            xs = old_xs;
+            xe = old_xe;
+        }
+    }else if (tri_type == TRIANGLE_TYPE::LEFT_LONG_TRIANGLE){
+        
+        float dy10 = y1 - y0;
+        float dxdy10 = (x1 - x0)/dy10;
+        
+        float dy20 = y2 - y0;
+        float dxdy20 = (x2 - x0)/dy20;
+        
+        float dy21 = y2 - y1;
+        float dxdy21 = (x2 - x1)/dy21;
+        
+        // 裁减
+        if (y0 > kMAX_CLIP_Y || y2 < kMIN_CLIP_Y) {
+            return;
+        }
+        
+        if (y0 < kMIN_CLIP_Y) {
+            y0 = kMIN_CLIP_Y;
+        }
+        
+        // test y1
+        if (y1 < kMIN_CLIP_Y) {
+            y1 = kMIN_CLIP_Y;
+        }
+        
+        if (y1 > kMAX_CLIP_Y) {
+            y1 = kMAX_CLIP_Y;
+        }
+        
+        // test y2
+        if (y2 > kMAX_CLIP_Y) {
+            y2 = kMAX_CLIP_Y;
+        }
+
+        float xs = x0,xe = x0;
+        float old_xs = x0,old_xe = x0;
+        int endY = y1;
+        int start = (int)y0 * mem_pitch;
+        for (int i = y0; i < endY; ++i) {
+            
+          //  assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy20;
+                old_xe += dxdy10;
+                continue;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = color;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy20;
+            old_xe += dxdy10;
+            xs = old_xs;
+            xe = old_xe;
+        }
+        
+        endY = y2;
+        xe = x1;
+        old_xe = x1;
+        for (int i = y1;i < endY; ++i) {
+            
+         //   assert(old_xs <= old_xe);
+            
+            if (old_xs > kMAX_CLIP_X || old_xe < kMIN_CLIP_X) {
+                old_xs += dxdy20;
+                old_xe += dxdy21;
+                continue;
+            }
+            
+            if (old_xs < kMIN_CLIP_X) {
+                xs = kMIN_CLIP_X;
+            }
+            
+            if (old_xe > kMAX_CLIP_X) {
+                xe = kMAX_CLIP_X;
+            }
+            
+            for (int k = xs; k <= xe; ++k) {
+                dst_buffer[start + k] = color;
+            }
+            start += mem_pitch;
+            
+            old_xs += dxdy20;
+            old_xe += dxdy21;
+            xs = old_xs;
+            xe = old_xe;
+        }
+    }
+    else{
+        printf("DrawTriangle maybe some error......\n");
+    }
+}
+
+void DrawTriangle(Vec2* pv){
+    
+    Uint32 color = gColorGreen;
+    
+    int ix0 = (int)pv[0].x;
+    int iy0 = (int)pv[0].y;
+    int ix1 = (int)pv[1].x;
+    int iy1 = (int)pv[1].y;
+    int ix2 = (int)pv[2].x;
+    int iy2 = (int)pv[2].y;
+    
+    // first trivial clipping rejection tests
+    if (((pv[0].y < kMIN_CLIP_Y)  &&
+         (pv[1].y < kMIN_CLIP_Y)  &&
+         (pv[2].y < kMIN_CLIP_Y)) ||
+        
+        ((pv[0].y > kMAX_CLIP_Y)  &&
+         (pv[1].y > kMAX_CLIP_Y)  &&
+         (pv[2].y > kMAX_CLIP_Y)) ||
+        
+        ((pv[0].x < kMIN_CLIP_X)  &&
+         (pv[1].x < kMIN_CLIP_X)  &&
+         (pv[2].x < kMIN_CLIP_X)) ||
+        
+        ((pv[0].x > kMAX_CLIP_X)  &&
+         (pv[1].x > kMAX_CLIP_X)  &&
+         (pv[2].x > kMAX_CLIP_X)))
+    {
+        return;
+    }
+    
+
+    // degenerate triangle
+    if ( ((ix0==ix1) &&
+          (ix1==ix2)) ||
+        ((iy0==iy1) &&
+         (iy1==iy2)))
+    {
+        return;
+    }
+    
+    // 排列顶点
+    int v0 = 0;
+    int v1 = 1;
+    int v2 = 2;
+    int temp;
+    if (iy1 < iy0) {
+        temp = v0;
+        v0 = v1;
+        v1 = temp;
+    }
+    
+    if (iy2 < iy0){
+        temp = v0;
+        v0 = v2;
+        v2 = temp;
+    }
+    
+    if (iy2 < iy1) {
+        temp = v1;
+        v1 = v2;
+        v2 = temp;
+    }
+    
+    TRIANGLE_TYPE tri_type;
+    
+    // 检测是哪种三角形
+    if ((int)pv[v0].y == (int)pv[v1].y) {
+        // 平顶三角形
+        tri_type = TRIANGLE_TYPE::FLAT_TOP_TRIANGLE;
+        
+        // 从左到右排列顶点
+        if (ix1 < ix0) {
+            temp = v0;
+            v0 = v1;
+            v1 = temp;
+        }
+    }//end if
+    else{
+        if ((int)pv[v1].y == (int)pv[v2].y) {
+            // 平底三角形
+            tri_type = TRIANGLE_TYPE::FLAT_BOTTOM_TRIANGLE;
+            
+            //从左到右
+            if (ix1 < ix2) {
+                temp = v1;
+                v1 = v2;
+                v2 = temp;
+            }
+        }// end if
+        else{
+            // 判断三角形是左边长还是右边长
+            // 插值计算
+            float interx = pv[v0].x + (pv[v1].y - pv[v0].y)*(pv[v2].x - pv[v0].x)/(pv[v2].y - pv[v0].y);
             if (interx > pv[v1].x) {
                 tri_type = TRIANGLE_TYPE::RIGHT_LONG_TRIANGLE;
             }else{
@@ -831,7 +1453,7 @@ void DrawTriangle(Vec2* pv){
         }
         
         endY = y2;
-        xe = y1;
+        xs = x1;
         for (int i = y1; i < endY; ++i) {
             DrawLine(xs,i,xe,i,color);
             xs += dxdy21;
@@ -847,7 +1469,7 @@ void DrawTriangle(Vec2* pv){
         
         float dy21 = y2 - y1;
         float dxdy21 = (x2 - x1)/dy21;
-
+        
         float xs = x0,xe = x0;
         int endY = y1;
         for (int i = y0; i < endY; ++i) {
@@ -869,3 +1491,4 @@ void DrawTriangle(Vec2* pv){
     }
     
 }
+#endif

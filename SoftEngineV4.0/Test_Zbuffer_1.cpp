@@ -26,6 +26,7 @@
 #include "Text2D.h"
 #include "Light.h"
 #include "Render_2.h"
+#include "RenderTriangle2D.h"
 
 
 // 渲染文字
@@ -71,7 +72,7 @@ int main(int argc, const char * argv[])
     Light* dirLight = LightManager::getInstance()->createDirLight(diffuse, lightDir);
     
     // 点光源
-    Color pointDiffuse(200,0,0);
+    Color pointDiffuse(255,255,0);
     Light* pointLight = LightManager::getInstance()->createPointLight(pointDiffuse,lightPosition);
     
     // end of 创建灯光
@@ -83,9 +84,10 @@ int main(int argc, const char * argv[])
     Texture2* texture = TextureCache::getInstance()->addImage("grid.jpg");
     
     Mesh ball;
+    ball.setMaterialType(Material::GOURAUD);
    // load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
-    load_Obj_Vertex(&ball, "monkey.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
-    ball.setMaterialType(Material::FLAT);
+    load_Obj_Vertex(&ball, "ball_1.obj",Vec3(200, 200, 200),Vec3(0, 0,-100));
+    
     
     // end of 创建物体
     ////////////////////////////////////////////////////////////
@@ -196,12 +198,77 @@ int main(int argc, const char * argv[])
                 Text2D::showText("remove backface:false", 0, 120);
             }
             
-            Vec2 v[3] = {
-                {332.5, 83.1},
-                {392.9, 83.2},
-                {464.8, 223.6}
+
+            
+            //////////////////////////////////////////////
+            // v0-v5
+            Vec2 v0[3] = {
+                {5.1,84.12},
+                {214.24,84.12},
+                {143.44,233.6}
             };
-            DrawTriangle(v);
+            Vec2 v1[3]={
+                {323.12,23.524},
+                {282.32,224.132},
+                {423.12,224.132},
+            };
+            Vec2 v2[3]={
+                {23.12,431.12},
+                {296.31,363.12},
+                {333.123,313.45},
+            };
+            Vec2 v3[3]={
+                {403.32,313.12},
+                {598.31,342.11},
+                {732.123,432.11},
+            };
+            Vec2 v4[3]={
+                {98.11,460.11},
+                {132.12,593.44},
+                {459.11,481.2},
+            };
+            Vec2 v5[3]={
+                {532.11,511.11},
+                {513.18,582.36},
+                {711.11,463.12},
+            };
+            
+            //v6  v7
+            Vec2 v6[3]={
+                {510.12,23.14},
+                {510.96,123.147},
+                {580.96,123.947}
+            };
+            
+            Vec2 v7[3]={
+                {610.12,23.14},
+                {610.96,125.747},
+                {680.96,23.143}
+            };
+            
+            // v8 v9
+            Vec2 v8[3]={
+                {580.96,223.14},
+                {510.96,323.147},
+                {580.96,323.947}
+            };
+            
+            Vec2 v9[3]={
+                {610.12,223.14},
+                {680.96,325.747},
+                {680.96,223.143}
+            };
+            
+            RenderGouraudTriangle2D(v0);
+            RenderGouraudTriangle2D(v1);
+            RenderGouraudTriangle2D(v2);
+            RenderGouraudTriangle2D(v3);
+            RenderGouraudTriangle2D(v4);
+            RenderGouraudTriangle2D(v5);
+            DrawTriangle(v6);
+            DrawTriangle(v7);
+            DrawTriangle(v8);
+            DrawTriangle(v9);
             
             swapBuffer();
         };
