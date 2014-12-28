@@ -2606,6 +2606,8 @@ void RenderTriangleTexture2D(Face* face){
     
     int minTexY = 0;
     int maxTexY = face->mati.texture->h - 1;
+    int minTexX = 0;
+    int maxTexX = face->mati.texture->w - 1;
     
     // 提取顶点,准备进行光栅化
     if (tri_type == TRIANGLE_TYPE::FLAT_TOP_TRIANGLE) {
@@ -2696,7 +2698,7 @@ void RenderTriangleTexture2D(Face* face){
             gs = xsg + dx * dgdx;
             
             for (int k = xs; k <= xe; ++k) {
-                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + clampInt(minTexX,maxTexX,rs)];
                 rs += drdx;
                 gs += dgdx;
             }
@@ -2800,7 +2802,7 @@ void RenderTriangleTexture2D(Face* face){
             gs = xsg + dx * dgdx;
             
             for (int k = xs; k <= xe; ++k) {
-                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + clampInt(minTexX,maxTexX,rs)];
                 rs += drdx;
                 gs += dgdx;
             }
@@ -3184,7 +3186,7 @@ void RenderTriangleTexture2D(Face* face){
             rs = xsr + dx * drdx;
             gs = xsg + dx * dgdx;
             for (int k = xs; k <= xe; ++k) {
-                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + (int)rs];
+                dst_buffer[start + k] = texmap[clampInt(minTexY,maxTexY,gs) * tex_pitch + clampInt(minTexX,maxTexX,rs)];
                 rs += drdx;
                 gs += dgdx;
             }

@@ -86,8 +86,13 @@ int main(int argc, const char * argv[])
     Mesh ball;
     ball.setMaterialType(Material::TEXTURE);
     load_Obj_Vertex_Tex(&ball,texture, "cube_tex.obj",Vec3(100, 100, 100),Vec3(0, 0,-100));
-   // load_Obj_Vertex(&ball, "monkey.obj",Vec3(150, 150, 150),Vec3(0, 0,-100));
+  //  load_Obj_Vertex(&ball, "monkey.obj",Vec3(150, 150, 150),Vec3(0, 0,-100));
     
+    
+ //   Texture2* planeTex = TextureCache::getInstance()->addImage("plane.jpg");
+    Mesh plane;
+    plane.setMaterialType(Material::TEXTURE);
+    load_Obj_Vertex_Tex(&plane,texture,"my_plane.obj",Vec3(100, 100, 100), Vec3(0, 0,0));
     
     // end of 创建物体
     ////////////////////////////////////////////////////////////
@@ -108,9 +113,11 @@ int main(int argc, const char * argv[])
             
             if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.sym == SDLK_LEFT) {
-                    pointLight->pos.x -= 10;
+                   // pointLight->pos.x -= 10;
+                    angle_y += 1.0;
                 }else if (event.key.keysym.sym == SDLK_RIGHT){
-                    pointLight->pos.x += 10;
+                   // pointLight->pos.x += 10;
+                    angle_y -= 1.0;
                 }
                 else if (event.key.keysym.sym == SDLK_UP){
                     pointLight->pos.z -= 10;
@@ -150,8 +157,8 @@ int main(int argc, const char * argv[])
                     angle_y -= 360.0;
                 }
                 
-                if (angle_x > 360.0) {
-                    angle_x -= 360.0;
+                if (angle_x > 90.0) {
+                    angle_x -= 90.0;
                 }
             }
             
@@ -161,12 +168,22 @@ int main(int argc, const char * argv[])
             renderlist.reset();
             ball.reset();
             
-            ball.setRotateY(angle_y);
-            //   ball.setRotateX(angle_x);
+            ball.setRotateY(angle_x);
+          //  ball.world_pos += Point3(0,200,0);
+         //   ball.setRotateX(angle_x);
             ball.modelToWorld(camera);
             renderlist.insertMesh(&ball);
             
-
+            
+            //////////////////////////////////////////////
+            plane.reset();
+           // plane.setRotateX(45);
+            plane.setRotateX(angle_y);
+            plane.modelToWorld(camera);
+           // renderlist.insertMesh(&plane);
+            
+            
+            //////////////////////////////////////////////
             if (remove_back_face) {
                 renderlist.removeBackface(camera);
             }
@@ -182,7 +199,7 @@ int main(int argc, const char * argv[])
         {
             renderClear();
             
-            renderlist.draw();
+            renderlist.draw(wire);
             
             FPS::getInstance()->showFPS();
             
@@ -259,16 +276,16 @@ int main(int argc, const char * argv[])
                 {680.96,223.143}
             };
             
-            RenderGouraudTriangle2D(v0);
-            RenderGouraudTriangle2D(v1);
-            RenderGouraudTriangle2D(v2);
-            RenderGouraudTriangle2D(v3);
-            RenderGouraudTriangle2D(v4);
-            RenderGouraudTriangle2D(v5);
-            DrawTriangle(v6);
-            DrawTriangle(v7);
-            DrawTriangle(v8);
-            DrawTriangle(v9);
+//            RenderGouraudTriangle2D(v0);
+//            RenderGouraudTriangle2D(v1);
+//            RenderGouraudTriangle2D(v2);
+//            RenderGouraudTriangle2D(v3);
+//            RenderGouraudTriangle2D(v4);
+//            RenderGouraudTriangle2D(v5);
+//            DrawTriangle(v6);
+//            DrawTriangle(v7);
+//            DrawTriangle(v8);
+//            DrawTriangle(v9);
             
             swapBuffer();
         };

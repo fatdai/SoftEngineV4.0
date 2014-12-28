@@ -17,7 +17,6 @@
 // render 2d 三角形
 void RenderTriangle2D(Vec2* pv);
 
-
 void RenderTriangle2D(Face* face);
 
 // 2d gouraud

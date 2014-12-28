@@ -80,7 +80,7 @@ public:
     void drawSolid();
     
     // 绘制
-    void draw();
+    void draw(bool debugWire = false);
     
 public:
     

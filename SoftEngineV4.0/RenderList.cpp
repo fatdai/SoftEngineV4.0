@@ -15,6 +15,7 @@
 #include "Render_2.h"
 #include "RenderLine.h"
 #include "RenderTriangle2D.h"
+#include "RenderTriangle3D.h"
 
 RenderList::RenderList(){
     num_faces = 0;
@@ -786,7 +787,6 @@ void RenderList::light(Camera* camera){
 void RenderList::perspective(Camera* camera){
     
     float tmpz = 0;
-    
     for (int i = 0; i < num_faces; ++i) {
         Face* cur_face = &face_data[i];
         
@@ -800,7 +800,9 @@ void RenderList::perspective(Camera* camera){
         for (int vertex = 0; vertex < 3; ++vertex) {
             tmpz = -1.0/cur_face->vlist_trans[vertex].z; 
             camera->mper.transformPoint(cur_face->vlist_trans[vertex].v,&cur_face->vlist_trans[vertex].v);
-            cur_face->vlist_trans[vertex].v *= tmpz;
+            cur_face->vlist_trans[vertex].x *= tmpz;
+            cur_face->vlist_trans[vertex].y *= tmpz;
+            cur_face->vlist_trans[vertex].z *= -1.0;
         }
     }
 }
@@ -870,7 +872,7 @@ void RenderList::drawSolid(){
     }
 }
 
-void RenderList::draw(){
+void RenderList::draw(bool debugWire){
     
     for (int i = 0; i < num_faces; ++i) {
         Face* cur_face = &face_data[i];
@@ -910,13 +912,29 @@ void RenderList::draw(){
             
          //   draw_gouraud_triangle(cur_face);
             
-            RenderGouraudTriangle2D(cur_face);
+            if (debugWire) {
+                Uint32 color = cur_face->lit_color[0].toInt_RGB();
+                RenderLine(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
+                RenderLine(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
+                RenderLine(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
+            }else{
+                RenderGouraudTriangle2D(cur_face);
+            }
             
         }else if (cur_face->mati.mati_type == Material::TEXTURE){
             
            // draw_texture_triangle(cur_face);
-            RenderTriangleTexture2D(cur_face);
+           // RenderTriangleTexture2D(cur_face);
             
+            if (debugWire) {
+//                Uint32 color = cur_face->lit_color[0].toInt_RGB();
+//                RenderLine(cur_face->vlist_trans[0].x, cur_face->vlist_trans[0].y, cur_face->vlist_trans[1].x,cur_face->vlist_trans[1].y,color);
+//                RenderLine(cur_face->vlist_trans[1].x, cur_face->vlist_trans[1].y, cur_face->vlist_trans[2].x,cur_face->vlist_trans[2].y,color);
+//                RenderLine(cur_face->vlist_trans[2].x, cur_face->vlist_trans[2].y, cur_face->vlist_trans[0].x,cur_face->vlist_trans[0].y,color);
+                RenderTriangleTexture2D(cur_face);
+            }else{
+                RenderTriangleTexture3D(cur_face);
+            }
         }
         
 #ifdef _SD_DEBUG_
