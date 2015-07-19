@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE4013D51A53AC6A00D5B635 /* Terrain_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE4013D31A53AC6A00D5B635 /* Terrain_1.cpp */; };
+		CE4013D81A53B4EC00D5B635 /* Test_Terrain_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE4013D61A53B4EC00D5B635 /* Test_Terrain_1.cpp */; };
+		CE4D46E71A51842B00BB220A /* CTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE4D46E51A51842B00BB220A /* CTerrain.cpp */; };
+		CE4D46EA1A518AD500BB220A /* CBruteForce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE4D46E81A518AD500BB220A /* CBruteForce.cpp */; };
 		CE52DF781A46EA120051DB4E /* Test_Texture_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF761A46EA120051DB4E /* Test_Texture_1.cpp */; };
 		CE52DF7B1A46F84A0051DB4E /* Test_Zbuffer_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */; };
 		CE52DF7E1A46FB4C0051DB4E /* ZBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE52DF7C1A46FB4C0051DB4E /* ZBuffer.cpp */; };
@@ -34,9 +38,6 @@
 		CE8E47E51A49ABC100E63B03 /* Render_2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8E47E31A49ABC100E63B03 /* Render_2.cpp */; };
 		CEB80C7C1A4AA72300D9E049 /* RenderTriangle3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEB80C7A1A4AA72300D9E049 /* RenderTriangle3D.cpp */; };
 		CEFF10461A451317001DBE6F /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10441A451317001DBE6F /* Global.cpp */; };
-		CEFF104B1A4515E7001DBE6F /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF10481A4515E7001DBE6F /* SDL2_image.framework */; };
-		CEFF104C1A4515E7001DBE6F /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF10491A4515E7001DBE6F /* SDL2_ttf.framework */; };
-		CEFF104D1A4515E7001DBE6F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFF104A1A4515E7001DBE6F /* SDL2.framework */; };
 		CEFF10501A45163B001DBE6F /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF104E1A45163B001DBE6F /* Color.cpp */; };
 		CEFF10531A45602D001DBE6F /* Render_1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10511A45602D001DBE6F /* Render_1.cpp */; };
 		CEFF10581A456174001DBE6F /* Texture2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFF10541A456174001DBE6F /* Texture2.cpp */; };
@@ -71,6 +72,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE4013D31A53AC6A00D5B635 /* Terrain_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain_1.cpp; sourceTree = "<group>"; };
+		CE4013D41A53AC6A00D5B635 /* Terrain_1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Terrain_1.h; sourceTree = "<group>"; };
+		CE4013D61A53B4EC00D5B635 /* Test_Terrain_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test_Terrain_1.cpp; sourceTree = "<group>"; };
+		CE4D46E51A51842B00BB220A /* CTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CTerrain.cpp; sourceTree = "<group>"; };
+		CE4D46E61A51842B00BB220A /* CTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTerrain.h; sourceTree = "<group>"; };
+		CE4D46E81A518AD500BB220A /* CBruteForce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CBruteForce.cpp; sourceTree = "<group>"; };
+		CE4D46E91A518AD500BB220A /* CBruteForce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBruteForce.h; sourceTree = "<group>"; };
 		CE52DF761A46EA120051DB4E /* Test_Texture_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test_Texture_1.cpp; sourceTree = "<group>"; };
 		CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test_Zbuffer_1.cpp; sourceTree = "<group>"; };
 		CE52DF7C1A46FB4C0051DB4E /* ZBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZBuffer.cpp; sourceTree = "<group>"; };
@@ -131,9 +139,6 @@
 		CEB80C7B1A4AA72300D9E049 /* RenderTriangle3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTriangle3D.h; sourceTree = "<group>"; };
 		CEFF10441A451317001DBE6F /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Global.cpp; sourceTree = "<group>"; };
 		CEFF10451A451317001DBE6F /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
-		CEFF10481A4515E7001DBE6F /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_image.framework; sourceTree = "<group>"; };
-		CEFF10491A4515E7001DBE6F /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_ttf.framework; sourceTree = "<group>"; };
-		CEFF104A1A4515E7001DBE6F /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 		CEFF104E1A45163B001DBE6F /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
 		CEFF104F1A45163B001DBE6F /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		CEFF10511A45602D001DBE6F /* Render_1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Render_1.cpp; sourceTree = "<group>"; };
@@ -173,15 +178,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEFF104D1A4515E7001DBE6F /* SDL2.framework in Frameworks */,
-				CEFF104C1A4515E7001DBE6F /* SDL2_ttf.framework in Frameworks */,
-				CEFF104B1A4515E7001DBE6F /* SDL2_image.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE4D46E11A5183EB00BB220A /* terrain */ = {
+			isa = PBXGroup;
+			children = (
+				CE4D46E51A51842B00BB220A /* CTerrain.cpp */,
+				CE4D46E61A51842B00BB220A /* CTerrain.h */,
+				CE4D46E81A518AD500BB220A /* CBruteForce.cpp */,
+				CE4D46E91A518AD500BB220A /* CBruteForce.h */,
+				CE4013D31A53AC6A00D5B635 /* Terrain_1.cpp */,
+				CE4013D41A53AC6A00D5B635 /* Terrain_1.h */,
+			);
+			name = terrain;
+			sourceTree = "<group>";
+		};
 		CE6901D21A4AA09200F1ECF1 /* render */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,9 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				CEFF10621A45639D001DBE6F /* Resources */,
-				CEFF10481A4515E7001DBE6F /* SDL2_image.framework */,
-				CEFF10491A4515E7001DBE6F /* SDL2_ttf.framework */,
-				CEFF104A1A4515E7001DBE6F /* SDL2.framework */,
 				CE83BA841A4460AF00C5A0BC /* SoftEngineV4.0 */,
 				CE83BA831A4460AF00C5A0BC /* Products */,
 			);
@@ -222,6 +234,7 @@
 		CE83BA841A4460AF00C5A0BC /* SoftEngineV4.0 */ = {
 			isa = PBXGroup;
 			children = (
+				CE4D46E11A5183EB00BB220A /* terrain */,
 				CE6901D21A4AA09200F1ECF1 /* render */,
 				CEFF10821A45A8F8001DBE6F /* ui */,
 				CEFF10731A457D9B001DBE6F /* model */,
@@ -338,6 +351,7 @@
 				CEFF109A1A45CB8E001DBE6F /* Test_Light_1.cpp */,
 				CE52DF761A46EA120051DB4E /* Test_Texture_1.cpp */,
 				CE52DF791A46F84A0051DB4E /* Test_Zbuffer_1.cpp */,
+				CE4013D61A53B4EC00D5B635 /* Test_Terrain_1.cpp */,
 			);
 			name = test;
 			sourceTree = "<group>";
@@ -438,6 +452,7 @@
 				CEFF10531A45602D001DBE6F /* Render_1.cpp in Sources */,
 				CE83BAC31A44613500C5A0BC /* Vec2.cpp in Sources */,
 				CEFF105D1A456344001DBE6F /* App.cpp in Sources */,
+				CE4D46EA1A518AD500BB220A /* CBruteForce.cpp in Sources */,
 				CEFF10791A457DDB001DBE6F /* SDException.cpp in Sources */,
 				CE83BABE1A44613500C5A0BC /* CCVertex.cpp in Sources */,
 				CEFF10611A456365001DBE6F /* DrawTriangle_Wire.cpp in Sources */,
@@ -457,13 +472,16 @@
 				CE6901D51A4AA0AC00F1ECF1 /* RenderLine.cpp in Sources */,
 				CE83BAC81A4468BE00C5A0BC /* Camera.cpp in Sources */,
 				CE83BAC01A44613500C5A0BC /* MathUtil.cpp in Sources */,
+				CE4013D51A53AC6A00D5B635 /* Terrain_1.cpp in Sources */,
 				CE83BA9C1A44611200C5A0BC /* FaceIndex.cpp in Sources */,
 				CEFF10721A456EB7001DBE6F /* MeshCache.cpp in Sources */,
+				CE4013D81A53B4EC00D5B635 /* Test_Terrain_1.cpp in Sources */,
 				CEFF10811A45A1D8001DBE6F /* FPS.cpp in Sources */,
 				CEFF10501A45163B001DBE6F /* Color.cpp in Sources */,
 				CE83BA9E1A44611200C5A0BC /* Mesh.cpp in Sources */,
 				CEFF106F1A456E89001DBE6F /* Sprite.cpp in Sources */,
 				CEFF107D1A459822001DBE6F /* Draw_Obj_Monkey.cpp in Sources */,
+				CE4D46E71A51842B00BB220A /* CTerrain.cpp in Sources */,
 				CE83BABF1A44613500C5A0BC /* Mat4.cpp in Sources */,
 				CE6901D81A4AA16C00F1ECF1 /* RenderTriangle2D.cpp in Sources */,
 			);
@@ -545,24 +563,56 @@
 		CE83BA8C1A4460AF00C5A0BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/Cellar/sdl2/2.0.3/include/SDL2,
+					/usr/local/Cellar/sdl2_image/2.0.0_1/include/SDL2,
+					/usr/local/Cellar/sdl2_ttf/2.0.12/include/SDL2,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/sdl2/2.0.3/lib,
+					/usr/local/Cellar/sdl2_image/2.0.0_1/lib,
+					/usr/local/Cellar/sdl2_ttf/2.0.12/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lSDL2",
+					"-lSDL2_image",
+					"-lSDL2_ttf",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/SDL2_ttf.framework/Versions/A/Headers $(PROJECT_DIR)/SDL2.framework/Versions/A/Headers $(PROJECT_DIR)/SDL2_image.framework/Versions/A/Headers";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
 		CE83BA8D1A4460AF00C5A0BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/Cellar/sdl2/2.0.3/include/SDL2,
+					/usr/local/Cellar/sdl2_image/2.0.0_1/include/SDL2,
+					/usr/local/Cellar/sdl2_ttf/2.0.12/include/SDL2,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/sdl2/2.0.3/lib,
+					/usr/local/Cellar/sdl2_image/2.0.0_1/lib,
+					/usr/local/Cellar/sdl2_ttf/2.0.12/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lSDL2",
+					"-lSDL2_image",
+					"-lSDL2_ttf",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/SDL2_ttf.framework/Versions/A/Headers $(PROJECT_DIR)/SDL2.framework/Versions/A/Headers $(PROJECT_DIR)/SDL2_image.framework/Versions/A/Headers";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

@@ -152,6 +152,10 @@ void RenderTriangleTexture3D(Face* face){
     int maxTexY = face->mati.texture->h - 1;
     int maxTexX = face->mati.texture->w - 1;
     
+//    float invz0 = z0;
+//    float invz1 = z1;
+//    float invz2 = z2;
+    
     float invz0 = 1.0/z0;
     float invz1 = 1.0/z1;
     float invz2 = 1.0/z2;

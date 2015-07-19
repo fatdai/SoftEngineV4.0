@@ -9,7 +9,7 @@
 #include "App.h"
 #include "Global.h"
 #include "FileUtil.h"
-#include "SDL_ttf.h"
+//#include <SDL2_ttf/SDL_ttf.h>
 #include "FPS.h"
 
 TTF_Font* loadTTFFont(const string& font,int size){

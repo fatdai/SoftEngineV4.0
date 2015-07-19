@@ -37,7 +37,7 @@ bool animation = true;
 
 int main(int argc, const char * argv[])
 {
-    if (!initEngine("/Users/user/work/xcode_workspace/SoftEngineV4.0/Resources/")) {
+    if (!initEngine("/Users/dai/Graphics/SoftEngineV4.0/Resources/")) {
         printf("init error!\n");
         exit(0);
     }
@@ -81,7 +81,7 @@ int main(int argc, const char * argv[])
     
     ////////////////////////////////////////////////////////////
     // 创建物体
-    Texture2* texture = TextureCache::getInstance()->addImage("cube_2.jpg");
+    Texture2* texture = TextureCache::getInstance()->addImage("plane.jpg");
     
     Mesh ball;
     ball.setMaterialType(Material::TEXTURE);
@@ -157,8 +157,8 @@ int main(int argc, const char * argv[])
                     angle_y -= 360.0;
                 }
                 
-                if (angle_x > 90.0) {
-                    angle_x -= 90.0;
+                if (angle_x > 360.0) {
+                    angle_x -= 360.0;
                 }
             }
             
@@ -168,7 +168,7 @@ int main(int argc, const char * argv[])
             renderlist.reset();
             ball.reset();
             
-            ball.setRotateY(angle_x);
+            ball.setRotateY(angle_y);
           //  ball.world_pos += Point3(0,200,0);
          //   ball.setRotateX(angle_x);
             ball.modelToWorld(camera);

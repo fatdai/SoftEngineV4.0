@@ -787,6 +787,7 @@ void RenderList::light(Camera* camera){
 void RenderList::perspective(Camera* camera){
     
     float tmpz = 0;
+    float oldz = 0;
     for (int i = 0; i < num_faces; ++i) {
         Face* cur_face = &face_data[i];
         
@@ -797,12 +798,14 @@ void RenderList::perspective(Camera* camera){
         }
         
         // 将齐次坐标转换成 非齐次坐标
+        // 主要需要知道这里面的原理
         for (int vertex = 0; vertex < 3; ++vertex) {
-            tmpz = -1.0/cur_face->vlist_trans[vertex].z; 
+            tmpz = -1.0/cur_face->vlist_trans[vertex].z;
+            oldz = cur_face->vlist_trans[vertex].z;
             camera->mper.transformPoint(cur_face->vlist_trans[vertex].v,&cur_face->vlist_trans[vertex].v);
             cur_face->vlist_trans[vertex].x *= tmpz;
             cur_face->vlist_trans[vertex].y *= tmpz;
-            cur_face->vlist_trans[vertex].z *= -1.0;
+            cur_face->vlist_trans[vertex].z = -oldz;
         }
     }
 }

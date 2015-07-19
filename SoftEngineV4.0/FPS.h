@@ -10,7 +10,7 @@
 #define __SoftEngineV4_0__FPS__
 
 #include <iostream>
-#include "SDL.h"
+#include "Global.h"
 #include <sstream>
 #include <string>
 using namespace std;
